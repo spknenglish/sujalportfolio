@@ -170,6 +170,7 @@
         <div class="flex items-center gap-1 sm:gap-4 md:gap-6 bg-zinc-100/80 dark:bg-zinc-900/40 backdrop-blur-md px-4 py-2 rounded-full border border-zinc-200/50 dark:border-zinc-800/50 shadow-sm">
           <a href="#about" class="text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-200 px-2 sm:px-3 py-1 rounded-full transition-colors">Bio</a>
           <a href="#projects" class="text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-200 px-2 sm:px-3 py-1 rounded-full transition-colors">Projects</a>
+          <a href="#courses" class="text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-200 px-2 sm:px-3 py-1 rounded-full transition-colors">Courses</a>
           <a href="#support" class="text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-200 px-2 sm:px-3 py-1 rounded-full transition-colors">Support</a>
           <a href="#contact" class="text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-200 px-2 sm:px-3 py-1 rounded-full transition-colors">Contact</a>
           
@@ -428,6 +429,252 @@
 
         </div>
       </section>
+
+      <!-- Courses Masterclass Section -->
+      <section id="courses" class="py-24 border-t border-zinc-200/50 dark:border-zinc-800/50 scroll-mt-10 reveal-section">
+        <div class="space-y-4 mb-16">
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 rounded-full text-[10px] font-mono tracking-wider uppercase font-bold">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+            <span>Premium Web Masterclass Tiers</span>
+          </div>
+          <h3 class="text-3xl md:text-4xl font-display font-medium text-zinc-900 dark:text-zinc-50 leading-tight">
+            Learn premium front-end architecture &amp; full-stack engineering.
+          </h3>
+          <p class="text-zinc-500 dark:text-zinc-400 max-w-2xl font-light text-sm">
+            Level up your production standards with premium handbooks and system architectures curated directly by Sujal. Select your curriculum plan below to enroll. No real payments required.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          
+          <!-- Basic Tier Card -->
+          <div class="bg-zinc-100/40 dark:bg-zinc-900/30 border border-zinc-200/60 dark:border-zinc-800/60 rounded-3xl p-8 flex flex-col justify-between hover:border-zinc-400 dark:hover:border-zinc-650 transition-all duration-300">
+            <div>
+              <div class="flex justify-between items-center mb-6">
+                <span class="text-[10px] font-mono text-zinc-400 uppercase tracking-wider font-semibold">Web Basics</span>
+                <span class="px-2.5 py-1 bg-zinc-200/50 dark:bg-zinc-800/50 text-[10px] font-mono text-zinc-505 rounded-md">Self-Paced</span>
+              </div>
+              <h4 class="text-2xl font-display font-bold text-zinc-900 dark:text-white mb-2">Basic Plan</h4>
+              <p class="text-zinc-505 dark:text-zinc-400 text-xs font-light leading-relaxed mb-6">
+                Master the fundamental sub-pixel alignments, fluid typography spacing, and modern responsive design mechanics.
+              </p>
+              
+              <!-- Pricing info -->
+              <div class="flex items-baseline gap-1 mb-8">
+                <span class="text-4xl font-mono font-bold text-zinc-900 dark:text-white">₹99</span>
+                <span class="text-xs font-mono text-zinc-400">/ lifetime</span>
+              </div>
+
+              <!-- Perks -->
+              <ul class="space-y-4 mb-8">
+                <li class="flex items-start gap-2 text-xs text-zinc-600 dark:text-zinc-400">
+                  <i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5"></i>
+                  <span>Access to 12+ Beginner Web Handbooks</span>
+                </li>
+                <li class="flex items-start gap-2 text-xs text-zinc-600 dark:text-zinc-400">
+                  <i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5"></i>
+                  <span>Responsive layout templates</span>
+                </li>
+                <li class="flex items-start gap-2 text-xs text-zinc-600 dark:text-zinc-400">
+                  <i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5"></i>
+                  <span>Core CSS Grid &amp; styling rules</span>
+                </li>
+              </ul>
+            </div>
+
+            <button 
+              class="course-enroll-btn w-full py-3 px-4 rounded-xl border border-zinc-250 dark:border-zinc-850 text-center text-xs font-mono font-bold text-zinc-800 dark:text-zinc-200 hover:bg-zinc-900 hover:text-white dark:hover:bg-white dark:hover:text-zinc-950 transition-all duration-300 cursor-pointer"
+              data-plan="Basic Plan"
+              data-subtitle="Master the fundamental sub-pixel alignments, fluid typography spacing, and modern responsive design mechanics."
+              data-price="₹99"
+            >
+              Get Instant Access
+            </button>
+          </div>
+
+          <!-- Pro Masterclass Card -->
+          <div class="relative bg-zinc-950 dark:bg-zinc-905 text-white dark:text-zinc-50 border-2 border-emerald-500 rounded-3xl p-8 flex flex-col justify-between shadow-xl transition-all duration-300 transform md:-translate-y-2">
+            <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-emerald-550 dark:bg-emerald-500 text-white dark:text-zinc-950 text-[10px] font-mono font-extrabold px-3 py-1 rounded-full uppercase tracking-wider shadow">
+              Most Popular
+            </div>
+
+            <div>
+              <div class="flex justify-between items-center mb-6">
+                <span class="text-[10px] font-mono text-emerald-400 uppercase tracking-wider font-semibold">Engineering tier</span>
+                <span class="px-2.5 py-1 bg-emerald-500/10 text-[10px] font-mono text-emerald-400 rounded-md">Certificate</span>
+              </div>
+              <h4 class="text-2xl font-display font-bold text-white mb-2">Pro Plan</h4>
+              <p class="text-zinc-400 text-xs font-light leading-relaxed mb-6">
+                Deploy full-stack Express environments proxying production APIs with clean, modular routing structures.
+              </p>
+              
+              <!-- Pricing info -->
+              <div class="flex items-baseline gap-1 mb-8">
+                <span class="text-4xl font-mono font-bold text-white">₹199</span>
+                <span class="text-xs font-mono text-zinc-400 font-light">/ lifetime</span>
+              </div>
+
+              <!-- Perks -->
+              <ul class="space-y-4 mb-8">
+                <li class="flex items-start gap-2 text-xs text-zinc-300">
+                  <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5"></i>
+                  <span>Everything in Basic tier and more</span>
+                </li>
+                <li class="flex items-start gap-2 text-xs text-zinc-300">
+                  <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5"></i>
+                  <span>Access to all Advanced blueprints</span>
+                </li>
+                <li class="flex items-start gap-2 text-xs text-zinc-300">
+                  <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5"></i>
+                  <span>Interactive GSAP &amp; Motion scripts</span>
+                </li>
+                <li class="flex items-start gap-2 text-xs text-zinc-300">
+                  <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5"></i>
+                  <span>Dedicated Discord support channel</span>
+                </li>
+              </ul>
+            </div>
+
+            <button 
+              class="course-enroll-btn w-full py-3 px-4 rounded-xl bg-emerald-500 text-zinc-950 hover:bg-emerald-405 text-center text-xs font-mono font-extrabold transition-all duration-300 cursor-pointer shadow-md"
+              data-plan="Pro Plan"
+              data-subtitle="Deploy full-stack Express environments proxying production APIs with clean, modular routing structures."
+              data-price="₹199"
+            >
+              Get Instant Access
+            </button>
+          </div>
+
+          <!-- Intermediate Specialist Card -->
+          <div class="bg-zinc-100/40 dark:bg-zinc-900/30 border border-zinc-200/60 dark:border-zinc-800/60 rounded-3xl p-8 flex flex-col justify-between hover:border-zinc-400 dark:hover:border-zinc-650 transition-all duration-300">
+            <div>
+              <div class="flex justify-between items-center mb-6">
+                <span class="text-[10px] font-mono text-zinc-400 uppercase tracking-wider font-semibold">Specialist tier</span>
+                <span class="px-2.5 py-1 bg-zinc-200/50 dark:bg-zinc-800/50 text-[10px] font-mono text-zinc-505 rounded-md">Live Seminars</span>
+              </div>
+              <h4 class="text-2xl font-display font-bold text-zinc-900 dark:text-white mb-2">Intermediate Plan</h4>
+              <p class="text-zinc-505 dark:text-zinc-400 text-xs font-light leading-relaxed mb-6">
+                Learn scalable modular systems, optimized database performance, and highly responsive structural engineering.
+              </p>
+              
+              <!-- Pricing info -->
+              <div class="flex items-baseline gap-1 mb-8">
+                <span class="text-4xl font-mono font-bold text-zinc-900 dark:text-white">₹499</span>
+                <span class="text-xs font-mono text-zinc-400">/ lifetime</span>
+              </div>
+
+              <!-- Perks -->
+              <ul class="space-y-4 mb-8">
+                <li class="flex items-start gap-2 text-xs text-zinc-600 dark:text-zinc-400">
+                  <i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5"></i>
+                  <span>Everything in Pro tier and more</span>
+                </li>
+                <li class="flex items-start gap-2 text-xs text-zinc-600 dark:text-zinc-400">
+                  <i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5"></i>
+                  <span>Live technical peer review workshops</span>
+                </li>
+                <li class="flex items-start gap-2 text-xs text-zinc-600 dark:text-zinc-400">
+                  <i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5"></i>
+                  <span>SQL, PostgreSQL &amp; SQLite architectures</span>
+                </li>
+                <li class="flex items-start gap-2 text-xs text-zinc-600 dark:text-zinc-400">
+                  <i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5"></i>
+                  <span>Bi-weekly peer code-reviews with Sujal</span>
+                </li>
+              </ul>
+            </div>
+
+            <button 
+              class="course-enroll-btn w-full py-3 px-4 rounded-xl border border-zinc-250 dark:border-zinc-850 text-center text-xs font-mono font-bold text-zinc-800 dark:text-zinc-200 hover:bg-zinc-900 hover:text-white dark:hover:bg-white dark:hover:text-zinc-950 transition-all duration-300 cursor-pointer"
+              data-plan="Intermediate Plan"
+              data-subtitle="Learn scalable modular systems, optimized database performance, and highly responsive structural engineering."
+              data-price="₹499"
+            >
+              Get Instant Access
+            </button>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Dedicated Premium Course Checkout Modal (Fake) -->
+      <div id="checkout-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
+        <!-- Overlay blur -->
+        <div id="checkout-overlay" class="absolute inset-0 bg-zinc-950/60 backdrop-blur-md opacity-0 pointer-events-none cursor-pointer"></div>
+        
+        <!-- Modal Content Panel -->
+        <div id="checkout-panel" class="relative w-full max-w-md bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl overflow-hidden shadow-2xl transform scale-95 opacity-0 z-10 px-6 sm:px-8 py-8">
+          
+          <!-- Close Button -->
+          <button id="checkout-close" class="absolute top-6 right-6 text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors p-1.5 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-full cursor-pointer">
+            <i data-lucide="x" class="w-4 h-4"></i>
+            <span class="sr-only">Close</span>
+          </button>
+
+          <!-- Course Header Context -->
+          <div id="checkout-intro-group" class="mb-6">
+            <div class="inline-block px-2.5 py-0.5 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 rounded-full text-[10px] font-mono tracking-wider uppercase font-semibold mb-2">
+              Instant Enrollment
+            </div>
+            <h4 id="checkout-plan-title" class="text-xl font-display font-bold text-zinc-900 dark:text-white">Pro Plan</h4>
+            <p id="checkout-plan-subtitle" class="text-xs text-zinc-500 dark:text-zinc-400 mt-1 font-light">Complete digital masterclass &amp; source code blueprints.</p>
+          </div>
+
+          <!-- Fake Checkout Form -->
+          <form id="checkout-form" class="space-y-4">
+            <div class="space-y-1.5">
+              <label class="text-[10px] font-mono uppercase text-zinc-400 dark:text-zinc-500 tracking-wider font-bold block">Your Name</label>
+              <input required type="text" id="checkout-name" placeholder="John Doe" class="w-full px-4 py-2.5 text-sm bg-zinc-50 dark:bg-zinc-950/60 border border-zinc-200 dark:border-zinc-800 rounded-xl focus:border-emerald-500 dark:focus:border-emerald-400 focus:ring-0 outline-none text-zinc-900 dark:text-white transition-all font-light" />
+            </div>
+
+            <div class="space-y-1.5">
+              <label class="text-[10px] font-mono uppercase text-zinc-400 dark:text-zinc-550 tracking-wider font-bold block">Email Address</label>
+              <input required type="email" id="checkout-email" placeholder="john@example.com" class="w-full px-4 py-2.5 text-sm bg-zinc-50 dark:bg-zinc-950/60 border border-zinc-200 dark:border-zinc-800 rounded-xl focus:border-emerald-500 dark:focus:border-emerald-400 focus:ring-0 outline-none text-zinc-900 dark:text-white transition-all font-light" />
+            </div>
+
+            <div class="space-y-1.5">
+              <label class="text-[10px] font-mono uppercase text-zinc-400 dark:text-zinc-550 tracking-wider font-bold block">Select Payment Mode</label>
+              <div class="grid grid-cols-2 gap-3">
+                <label class="cursor-pointer border border-zinc-200 dark:border-zinc-800 hover:border-emerald-500 dark:hover:border-emerald-450 p-3 rounded-xl flex items-center gap-2 bg-zinc-50/50 dark:bg-zinc-950/30">
+                  <input required type="radio" name="payment-method" value="upi" checked class="text-zinc-900 dark:text-white focus:ring-emerald-500" />
+                  <span class="text-xs font-mono font-medium text-zinc-700 dark:text-zinc-300">UPI / QR</span>
+                </label>
+                <label class="cursor-pointer border border-zinc-200 dark:border-zinc-800 hover:border-emerald-500 dark:hover:border-emerald-450 p-3 rounded-xl flex items-center gap-2 bg-zinc-50/50 dark:bg-zinc-950/30">
+                  <input required type="radio" name="payment-method" value="card" class="text-zinc-900 dark:text-white focus:ring-emerald-500" />
+                  <span class="text-xs font-mono font-medium text-zinc-700 dark:text-zinc-300">Credit Card</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Price Display -->
+            <div class="flex items-center justify-between p-4 bg-zinc-50 dark:bg-zinc-950/50 rounded-xl border border-zinc-150 dark:border-zinc-850 my-6">
+              <span class="text-xs font-mono text-zinc-500">Total Price (GST Incl.)</span>
+              <span id="checkout-amount-display" class="text-lg font-mono font-extrabold text-zinc-900 dark:text-white">₹199</span>
+            </div>
+
+            <!-- Checkout CTA -->
+            <button type="submit" id="checkout-submit-btn" class="w-full bg-emerald-500 hover:bg-emerald-450 dark:bg-emerald-505 dark:hover:bg-emerald-400 text-zinc-950 font-sans font-bold py-3 px-4 rounded-xl text-xs sm:text-sm shadow shadow-emerald-500/15 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer">
+              <span id="checkout-btn-text">Proceed to Simulated Payment</span>
+              <i data-lucide="arrow-right" class="w-4 h-4" id="checkout-btn-icon"></i>
+            </button>
+          </form>
+
+          <!-- Simulated Successful State inside modal -->
+          <div id="checkout-success-view" class="hidden text-center py-6 space-y-5">
+            <div class="w-16 h-16 rounded-full bg-emerald-500/10 text-emerald-500 flex items-center justify-center mx-auto mb-4">
+              <i data-lucide="party-popper" class="w-8 h-8"></i>
+            </div>
+            <h5 class="text-xl font-display font-bold text-zinc-900 dark:text-white">Enrollment Completed!</h5>
+            <p class="text-xs text-zinc-500 dark:text-zinc-400 max-w-sm mx-auto font-light leading-relaxed">
+              Congratulations! You've successfully subscribed to <span id="success-course-name" class="font-medium text-zinc-800 dark:text-zinc-200">Pro Plan</span>. Check your email for login structures and exclusive lesson source codes.
+            </p>
+            <button id="checkout-success-close" class="mt-4 w-full py-3 bg-zinc-950 dark:bg-white text-white dark:text-zinc-950 rounded-xl text-xs font-mono font-bold hover:bg-zinc-850 dark:hover:bg-zinc-100 transition-colors cursor-pointer">
+              Begin Learning
+            </button>
+          </div>
+
+        </div>
+      </div>
 
       <!-- Support Section -->
       <section id="support" class="py-24 border-t border-zinc-200/50 dark:border-zinc-800/50 scroll-mt-10 reveal-section">
@@ -918,6 +1165,131 @@
         [overlay, drawerClose, drawerBack].forEach(el => {
           el.addEventListener('click', closeDrawer);
         });
+
+        // Premium Course Checkout Modal Interaction
+        const checkoutModal = document.getElementById('checkout-modal');
+        const checkoutOverlay = document.getElementById('checkout-overlay');
+        const checkoutPanel = document.getElementById('checkout-panel');
+        const checkoutClose = document.getElementById('checkout-close');
+        const checkoutForm = document.getElementById('checkout-form');
+        const checkoutIntroGroup = document.getElementById('checkout-intro-group');
+        const checkoutSuccessView = document.getElementById('checkout-success-view');
+        const checkoutSuccessClose = document.getElementById('checkout-success-close');
+        
+        const checkoutPlanTitle = document.getElementById('checkout-plan-title');
+        const checkoutPlanSubtitle = document.getElementById('checkout-plan-subtitle');
+        const checkoutAmountDisplay = document.getElementById('checkout-amount-display');
+        const successCourseName = document.getElementById('success-course-name');
+
+        const openCheckout = (planName, subtitle, price) => {
+          checkoutPlanTitle.textContent = planName;
+          checkoutPlanSubtitle.textContent = subtitle;
+          checkoutAmountDisplay.textContent = price;
+          successCourseName.textContent = planName;
+
+          // Reset views
+          if (checkoutForm) {
+            checkoutForm.reset();
+            checkoutForm.classList.remove('hidden');
+          }
+          if (checkoutIntroGroup) checkoutIntroGroup.classList.remove('hidden');
+          if (checkoutSuccessView) checkoutSuccessView.classList.add('hidden');
+
+          // Open with GSAP
+          if (checkoutModal) {
+            checkoutModal.classList.remove('pointer-events-none');
+            gsap.killTweensOf([checkoutOverlay, checkoutPanel]);
+            
+            gsap.fromTo(checkoutOverlay, 
+              { opacity: 0 }, 
+              { opacity: 1, duration: 0.3, pointerEvents: 'auto' }
+            );
+            
+            gsap.fromTo(checkoutPanel, 
+              { scale: 0.95, opacity: 0 }, 
+              { scale: 1, opacity: 1, duration: 0.4, ease: 'back.out(1.2)' }
+            );
+          }
+        };
+
+        const closeCheckout = () => {
+          if (checkoutModal) {
+            gsap.killTweensOf([checkoutOverlay, checkoutPanel]);
+            gsap.to(checkoutOverlay, { opacity: 0, duration: 0.25, pointerEvents: 'none' });
+            gsap.to(checkoutPanel, { 
+              scale: 0.95, 
+              opacity: 0, 
+              duration: 0.25, 
+              onComplete: () => {
+                checkoutModal.classList.add('pointer-events-none');
+              }
+            });
+          }
+        };
+
+        // Click handlers on enroll buttons
+        document.querySelectorAll('.course-enroll-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const plan = btn.getAttribute('data-plan');
+            const sub = btn.getAttribute('data-subtitle');
+            const price = btn.getAttribute('data-price');
+            openCheckout(plan, sub, price);
+          });
+        });
+
+        [checkoutClose, checkoutOverlay, checkoutSuccessClose].forEach(el => {
+          if (el) el.addEventListener('click', closeCheckout);
+        });
+
+        // Checkout form fake submission Handler
+        if (checkoutForm) {
+          checkoutForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const cSubmitBtn = document.getElementById('checkout-submit-btn');
+            const cBtnText = document.getElementById('checkout-btn-text');
+
+            if (cBtnText) cBtnText.textContent = "Validating secure session...";
+            if (cSubmitBtn) {
+              cSubmitBtn.disabled = true;
+              cSubmitBtn.style.opacity = '0.7';
+            }
+
+            setTimeout(() => {
+              if (cBtnText) cBtnText.textContent = "Proceed to Simulated Payment";
+              if (cSubmitBtn) {
+                cSubmitBtn.disabled = false;
+                cSubmitBtn.style.opacity = '1';
+              }
+
+              // Hide form & show complete screen
+              if (checkoutForm) checkoutForm.classList.add('hidden');
+              if (checkoutIntroGroup) checkoutIntroGroup.classList.add('hidden');
+              if (checkoutSuccessView) checkoutSuccessView.classList.remove('hidden');
+
+              // Toast feedback
+              const globalToast = document.getElementById('success-toast');
+              if (globalToast) {
+                globalToast.querySelector('span').textContent = `Enrolled in ${checkoutPlanTitle.textContent} successfully!`;
+                gsap.to(globalToast, {
+                  y: 0,
+                  opacity: 1,
+                  duration: 0.4,
+                  ease: 'power3.out',
+                  onComplete: () => {
+                    gsap.to(globalToast, {
+                      y: 40,
+                      opacity: 0,
+                      delay: 4.5,
+                      duration: 0.4,
+                      ease: 'power3.in'
+                    });
+                  }
+                });
+              }
+            }, 1500);
+          });
+        }
 
         // Contact Form Simulated Submission with Toast trigger
         const contactForm = document.getElementById('contact-form');
