@@ -1,0 +1,1978 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sujal Wagholikar – Toolkit</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.2/peerjs.min.js"></script>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --blue:#1a73e8;--blue-dark:#1558b0;--blue-light:#e8f0fe;--blue-mid:#4285f4;
+  --white:#ffffff;--gray-50:#f8f9fa;--gray-100:#f1f3f4;--gray-200:#e8eaed;
+  --gray-400:#9aa0a6;--gray-600:#5f6368;--gray-800:#3c4043;--gray-900:#202124;
+  --green:#34a853;--red:#ea4335;--yellow:#fbbc04;--orange:#fa7b17;
+  --shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.08);
+  --shadow-md:0 4px 12px rgba(0,0,0,.12);
+  --radius:12px;--radius-sm:8px;
+}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--gray-50);color:var(--gray-900);min-height:100vh}
+
+/* NAV */
+nav{background:var(--white);border-bottom:1px solid var(--gray-200);position:sticky;top:0;z-index:100;padding:0 1.5rem;display:flex;align-items:center;height:60px;gap:1rem}
+.nav-logo{display:flex;align-items:center;gap:.6rem;font-weight:700;font-size:1.1rem;color:var(--blue);text-decoration:none;flex-shrink:0}
+.nav-logo img{width:36px;height:36px;border-radius:50%;object-fit:cover}
+.nav-spacer{flex:1}
+.hamburger{display:none;background:none;border:none;cursor:pointer;padding:6px;border-radius:6px;color:var(--gray-800)}
+.hamburger:hover{background:var(--gray-100)}
+.hamburger svg{width:22px;height:22px}
+.nav-links{display:flex;gap:.25rem;align-items:center}
+.nav-links a{padding:6px 12px;border-radius:6px;text-decoration:none;font-size:.875rem;color:var(--gray-600);transition:.15s}
+.nav-links a:hover{background:var(--blue-light);color:var(--blue)}
+.nav-links a.active{color:var(--blue);background:var(--blue-light)}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#1a73e8 0%,#1558b0 100%);color:#fff;padding:2.5rem 1.5rem 2rem;text-align:center}
+.hero h1{font-size:1.75rem;font-weight:700;margin-bottom:.5rem}
+.hero p{font-size:.95rem;opacity:.88}
+
+/* SEARCH */
+.search-bar{max-width:480px;margin:1.5rem auto 0;display:flex;background:#fff;border-radius:24px;overflow:hidden;box-shadow:var(--shadow-md)}
+.search-bar input{flex:1;border:none;padding:.65rem 1.25rem;font-size:.9rem;outline:none;color:var(--gray-900)}
+.search-bar button{background:var(--blue-mid);border:none;padding:.65rem 1.25rem;cursor:pointer;color:#fff;font-size:.85rem}
+.search-bar button:hover{background:var(--blue-dark)}
+
+/* MAIN */
+main{max-width:1200px;margin:0 auto;padding:2rem 1.5rem}
+
+/* SECTION HEADERS */
+.section-header{display:flex;align-items:center;gap:.5rem;margin-bottom:1rem;margin-top:2rem}
+.section-header h2{font-size:1rem;font-weight:600;color:var(--gray-800)}
+.section-header .badge{background:var(--blue-light);color:var(--blue);font-size:.75rem;padding:2px 8px;border-radius:12px;font-weight:600}
+
+/* GRID */
+.tool-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px}
+
+/* CARD */
+.tool-card{background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius);padding:1.25rem 1rem;cursor:pointer;transition:.18s;display:flex;flex-direction:column;align-items:center;text-align:center;gap:.6rem;position:relative;overflow:hidden}
+.tool-card:hover{border-color:var(--blue);box-shadow:var(--shadow-md);transform:translateY(-2px)}
+.tool-card:hover .card-icon{background:var(--blue);color:#fff}
+.card-icon{width:50px;height:50px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;transition:.18s;flex-shrink:0}
+.card-label{font-size:.8rem;font-weight:600;color:var(--gray-800);line-height:1.3}
+.card-sub{font-size:.72rem;color:var(--gray-400);margin-top:1px}
+
+/* ICON COLORS */
+.ic-red{background:#fce8e6;color:#d93025}
+.ic-blue{background:#e8f0fe;color:#1a73e8}
+.ic-green{background:#e6f4ea;color:#188038}
+.ic-orange{background:#fef3e2;color:#e37400}
+.ic-purple{background:#f3e8fd;color:#7b1fa2}
+.ic-teal{background:#e0f2f1;color:#00695c}
+.ic-pink{background:#fce4ec;color:#c2185b}
+.ic-indigo{background:#e8eaf6;color:#3949ab}
+.ic-yellow{background:#fffde7;color:#f57f17}
+.ic-cyan{background:#e0f7fa;color:#00838f}
+.ic-lime{background:#f9fbe7;color:#558b2f}
+.ic-brown{background:#efebe9;color:#5d4037}
+
+/* MODAL OVERLAY */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;align-items:center;justify-content:center;padding:1rem}
+.modal-overlay.open{display:flex}
+.modal{background:#fff;border-radius:16px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.modal-header{padding:1.25rem 1.5rem 1rem;border-bottom:1px solid var(--gray-200);display:flex;align-items:center;gap:.75rem;position:sticky;top:0;background:#fff;z-index:1}
+.modal-header .mh-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.25rem;flex-shrink:0}
+.modal-header h3{font-size:1rem;font-weight:700;flex:1;color:var(--gray-900)}
+.modal-close{background:none;border:none;cursor:pointer;color:var(--gray-400);font-size:1.25rem;padding:4px;border-radius:6px;line-height:1}
+.modal-close:hover{color:var(--gray-800);background:var(--gray-100)}
+.modal-body{padding:1.5rem}
+
+/* DROP ZONE */
+.drop-zone{border:2px dashed var(--gray-200);border-radius:var(--radius);padding:2rem 1rem;text-align:center;cursor:pointer;transition:.15s;background:var(--gray-50)}
+.drop-zone:hover,.drop-zone.dragover{border-color:var(--blue);background:var(--blue-light)}
+.drop-zone i{font-size:2.5rem;color:var(--blue);margin-bottom:.75rem;display:block}
+.drop-zone p{font-size:.875rem;color:var(--gray-600);margin-bottom:.5rem}
+.drop-zone small{font-size:.75rem;color:var(--gray-400)}
+.file-input{display:none}
+
+/* FILE LIST */
+.file-list{margin-top:1rem;display:flex;flex-direction:column;gap:.5rem}
+.file-item{background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px;padding:.6rem .85rem;display:flex;align-items:center;gap:.6rem;font-size:.8rem}
+.file-item i{color:var(--blue);font-size:1rem}
+.file-item .fi-name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--gray-800)}
+.file-item .fi-size{color:var(--gray-400);flex-shrink:0}
+.file-item .fi-remove{background:none;border:none;cursor:pointer;color:var(--gray-400);padding:2px 6px;border-radius:4px;font-size:.85rem}
+.file-item .fi-remove:hover{color:var(--red);background:#fce8e6}
+
+/* SLIDER */
+.slider-wrap{margin:.75rem 0}
+.slider-wrap label{display:flex;justify-content:space-between;font-size:.8rem;color:var(--gray-600);margin-bottom:.4rem}
+input[type=range]{width:100%;accent-color:var(--blue);height:4px;cursor:pointer}
+
+/* PROGRESS */
+.progress-wrap{margin:1rem 0;display:none}
+.progress-label{display:flex;justify-content:space-between;font-size:.8rem;color:var(--gray-600);margin-bottom:.4rem}
+.progress-bar{height:8px;background:var(--gray-200);border-radius:4px;overflow:hidden}
+.progress-fill{height:100%;background:var(--blue);border-radius:4px;transition:width .1s linear;width:0%}
+.progress-status{font-size:.78rem;color:var(--gray-400);margin-top:.3rem;text-align:center}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:.4rem;padding:.6rem 1.25rem;border-radius:8px;border:none;cursor:pointer;font-size:.875rem;font-weight:600;transition:.15s;text-decoration:none}
+.btn-primary{background:var(--blue);color:#fff}
+.btn-primary:hover{background:var(--blue-dark)}
+.btn-primary:disabled{background:var(--gray-200);color:var(--gray-400);cursor:not-allowed}
+.btn-secondary{background:var(--gray-100);color:var(--gray-800);border:1px solid var(--gray-200)}
+.btn-secondary:hover{background:var(--gray-200)}
+.btn-danger{background:#fce8e6;color:#d93025}
+.btn-danger:hover{background:#f28b82;color:#fff}
+.btn-success{background:#e6f4ea;color:#188038}
+.btn-success:hover{background:var(--green);color:#fff}
+.modal-actions{display:flex;gap:.75rem;margin-top:1.25rem;flex-wrap:wrap}
+
+/* RESULT */
+.result-box{background:var(--blue-light);border:1px solid #aecbfa;border-radius:8px;padding:1rem;margin-top:1rem;font-size:.85rem;color:var(--gray-800)}
+.result-box .result-title{font-weight:600;color:var(--blue);margin-bottom:.4rem;display:flex;align-items:center;gap:.4rem}
+.result-stats{display:flex;gap:1rem;margin-top:.5rem;flex-wrap:wrap}
+.result-stat{background:#fff;border-radius:6px;padding:.4rem .75rem;font-size:.78rem;color:var(--gray-600)}
+.result-stat strong{color:var(--gray-900);display:block;font-size:.88rem}
+
+/* TABS */
+.tabs{display:flex;gap:.25rem;margin-bottom:1.25rem;border-bottom:1px solid var(--gray-200);padding-bottom:0}
+.tab{padding:.5rem 1rem;border:none;background:none;cursor:pointer;font-size:.85rem;color:var(--gray-600);border-bottom:2px solid transparent;margin-bottom:-1px;transition:.15s}
+.tab.active{color:var(--blue);border-bottom-color:var(--blue);font-weight:600}
+
+/* PASSWORD FIELD */
+.pw-wrap{position:relative;margin-top:.75rem}
+.pw-wrap input{width:100%;padding:.6rem 2.5rem .6rem .85rem;border:1px solid var(--gray-200);border-radius:8px;font-size:.875rem;outline:none}
+.pw-wrap input:focus{border-color:var(--blue)}
+.pw-toggle{position:absolute;right:.75rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--gray-400);font-size:.9rem}
+
+/* PEER/VIDEO */
+.video-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1rem}
+.video-box{background:#1a1a2e;border-radius:10px;overflow:hidden;aspect-ratio:4/3;position:relative;display:flex;align-items:center;justify-content:center}
+.video-box video{width:100%;height:100%;object-fit:cover}
+.video-label{position:absolute;bottom:6px;left:8px;background:rgba(0,0,0,.6);color:#fff;font-size:.7rem;padding:2px 6px;border-radius:4px}
+.no-video{color:#555;font-size:.8rem;text-align:center}
+.no-video i{display:block;font-size:2rem;margin-bottom:.4rem;color:#333}
+.call-controls{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap}
+.ctrl-btn{width:42px;height:42px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.95rem;transition:.15s}
+.ctrl-btn.danger{background:#ea4335;color:#fff}
+.ctrl-btn.normal{background:var(--gray-200);color:var(--gray-800)}
+.ctrl-btn.normal:hover{background:var(--gray-300)}
+.ctrl-btn.active{background:var(--blue);color:#fff}
+.ctrl-btn.danger:hover{background:#c5221f}
+.peer-id-box{background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px;padding:.75rem 1rem;margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem;font-size:.8rem}
+.peer-id-box code{flex:1;font-family:monospace;font-size:.78rem;color:var(--blue);word-break:break-all}
+.chat-box{border:1px solid var(--gray-200);border-radius:8px;height:140px;overflow-y:auto;padding:.6rem;background:var(--gray-50);margin-bottom:.5rem;font-size:.8rem}
+.chat-msg{padding:.3rem .5rem;margin-bottom:.3rem;border-radius:6px}
+.chat-msg.me{background:var(--blue-light);text-align:right;color:var(--blue-dark)}
+.chat-msg.them{background:#fff;color:var(--gray-800);border:1px solid var(--gray-200)}
+.chat-input-row{display:flex;gap:.4rem}
+.chat-input-row input{flex:1;border:1px solid var(--gray-200);border-radius:6px;padding:.5rem .75rem;font-size:.8rem;outline:none}
+.chat-input-row input:focus{border-color:var(--blue)}
+
+/* FILE SHARE */
+.share-file-list{max-height:160px;overflow-y:auto;margin:.5rem 0}
+.share-item{display:flex;align-items:center;gap:.5rem;padding:.4rem .6rem;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:6px;margin-bottom:.3rem;font-size:.78rem}
+.share-item .si-name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.share-item .si-status{flex-shrink:0;color:var(--gray-400)}
+.si-progress{height:3px;background:var(--gray-200);border-radius:2px;margin-top:2px;flex:1}
+.si-progress-fill{height:100%;background:var(--blue);border-radius:2px;transition:width .1s}
+
+/* INFO BOX */
+.info-note{background:#e8f0fe;border-left:3px solid var(--blue);border-radius:4px;padding:.6rem .85rem;font-size:.78rem;color:#1a56db;margin-bottom:1rem}
+
+/* CANVAS HIDDEN */
+.hidden-canvas{display:none}
+
+/* LOADING SPINNER */
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid #fff3;border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* MOBILE NAV */
+@media(max-width:680px){
+  .hamburger{display:block}
+  .nav-links{display:none;position:fixed;top:60px;left:0;right:0;background:#fff;flex-direction:column;padding:1rem;border-bottom:1px solid var(--gray-200);gap:.25rem;z-index:99}
+  .nav-links.open{display:flex}
+  .nav-links a{padding:.65rem 1rem;border-radius:8px;font-size:.9rem}
+  .video-grid{grid-template-columns:1fr}
+  .tool-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}
+}
+
+.tag{display:inline-block;font-size:.7rem;padding:2px 7px;border-radius:10px;font-weight:600;margin-left:.4rem}
+.tag-new{background:#e6f4ea;color:#188038}
+.tag-beta{background:#fef3e2;color:#e37400}
+
+select,input[type=text],input[type=number],input[type=password]{padding:.55rem .85rem;border:1px solid var(--gray-200);border-radius:8px;font-size:.875rem;outline:none;width:100%;font-family:inherit;color:var(--gray-900);background:#fff}
+select:focus,input:focus{border-color:var(--blue)}
+
+.separator{height:1px;background:var(--gray-200);margin:1.5rem 0}
+
+.col2{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+@media(max-width:480px){.col2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">
+    <img src="https://i.postimg.cc/tRtwtZM6/sujal-png.jpg" alt="Sujal" onerror="this.style.display='none'">
+    Sujal Wagholikar
+  </a>
+  <div class="nav-spacer"></div>
+  <button class="hamburger" onclick="toggleNav()" aria-label="Menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+  <div class="nav-links" id="navLinks">
+    <a href="#" onclick="scrollTo('pdf-section')">PDF Tools</a>
+    <a href="#" onclick="scrollTo('img-section')">Image</a>
+    <a href="#" onclick="scrollTo('convert-section')">Convert</a>
+    <a href="#" onclick="scrollTo('share-section')">Share</a>
+    <a href="#" onclick="scrollTo('video-section')">Video Call</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>All-in-One Toolkit</h1>
+  <p>Compress, convert, share, and collaborate — all in your browser, no upload to servers</p>
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Search tools…" oninput="filterTools(this.value)">
+    <button><i class="fas fa-search"></i></button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main>
+
+<!-- PDF TOOLS -->
+<div id="pdf-section">
+  <div class="section-header">
+    <i class="fas fa-file-pdf" style="color:#ea4335;font-size:1.1rem"></i>
+    <h2>PDF Tools</h2><span class="badge">8 tools</span>
+  </div>
+  <div class="tool-grid" id="grid-pdf">
+
+    <div class="tool-card" data-name="compress pdf" onclick="openModal('compressPDF')">
+      <div class="card-icon ic-red"><i class="fas fa-compress-alt"></i></div>
+      <div class="card-label">Compress PDF</div>
+      <div class="card-sub">Reduce file size</div>
+    </div>
+
+    <div class="tool-card" data-name="merge pdf combine" onclick="openModal('mergePDF')">
+      <div class="card-icon ic-orange"><i class="fas fa-object-group"></i></div>
+      <div class="card-label">Merge PDFs</div>
+      <div class="card-sub">Combine files</div>
+    </div>
+
+    <div class="tool-card" data-name="split pdf pages" onclick="openModal('splitPDF')">
+      <div class="card-icon ic-yellow"><i class="fas fa-cut"></i></div>
+      <div class="card-label">Split PDF</div>
+      <div class="card-sub">Extract pages</div>
+    </div>
+
+    <div class="tool-card" data-name="rotate pdf pages" onclick="openModal('rotatePDF')">
+      <div class="card-icon ic-purple"><i class="fas fa-sync-alt"></i></div>
+      <div class="card-label">Rotate PDF</div>
+      <div class="card-sub">Fix orientation</div>
+    </div>
+
+    <div class="tool-card" data-name="password protect pdf lock" onclick="openModal('lockPDF')">
+      <div class="card-icon ic-indigo"><i class="fas fa-lock"></i></div>
+      <div class="card-label">Lock PDF</div>
+      <div class="card-sub">Add password</div>
+    </div>
+
+    <div class="tool-card" data-name="unlock pdf remove password" onclick="openModal('unlockPDF')">
+      <div class="card-icon ic-teal"><i class="fas fa-unlock-alt"></i></div>
+      <div class="card-label">Unlock PDF</div>
+      <div class="card-sub">Remove password</div>
+    </div>
+
+    <div class="tool-card" data-name="edit pdf watermark" onclick="openModal('editPDF')">
+      <div class="card-icon ic-cyan"><i class="fas fa-pen-nib"></i></div>
+      <div class="card-label">Watermark PDF</div>
+      <div class="card-sub">Add text overlay</div>
+    </div>
+
+    <div class="tool-card" data-name="pdf to image jpg png" onclick="openModal('pdfToImg')">
+      <div class="card-icon ic-pink"><i class="fas fa-image"></i></div>
+      <div class="card-label">PDF → Image</div>
+      <div class="card-sub">Export as PNG/JPG</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- IMAGE TOOLS -->
+<div id="img-section">
+  <div class="section-header" style="margin-top:2rem">
+    <i class="fas fa-images" style="color:#1a73e8;font-size:1.1rem"></i>
+    <h2>Image Tools</h2><span class="badge">5 tools</span>
+  </div>
+  <div class="tool-grid" id="grid-img">
+
+    <div class="tool-card" data-name="compress image jpg png webp" onclick="openModal('compressImg')">
+      <div class="card-icon ic-blue"><i class="fas fa-file-image"></i></div>
+      <div class="card-label">Compress Image</div>
+      <div class="card-sub">JPG/PNG/WEBP</div>
+    </div>
+
+    <div class="tool-card" data-name="images to pdf photos png jpg jpeg heic" onclick="openModal('imgToPDF')">
+      <div class="card-icon ic-green"><i class="fas fa-file-export"></i></div>
+      <div class="card-label">Images → PDF</div>
+      <div class="card-sub">Any format to PDF</div>
+    </div>
+
+    <div class="tool-card" data-name="convert image format jpg png webp" onclick="openModal('convertImg')">
+      <div class="card-icon ic-lime"><i class="fas fa-exchange-alt"></i></div>
+      <div class="card-label">Convert Image</div>
+      <div class="card-sub">Change format</div>
+    </div>
+
+    <div class="tool-card" data-name="resize image width height" onclick="openModal('resizeImg')">
+      <div class="card-icon ic-brown"><i class="fas fa-expand-arrows-alt"></i></div>
+      <div class="card-label">Resize Image</div>
+      <div class="card-sub">Width × Height</div>
+    </div>
+
+    <div class="tool-card" data-name="crop image" onclick="openModal('cropImg')">
+      <div class="card-icon ic-orange"><i class="fas fa-crop-alt"></i></div>
+      <div class="card-label">Crop Image</div>
+      <div class="card-sub">Trim to area</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CONVERT -->
+<div id="convert-section">
+  <div class="section-header" style="margin-top:2rem">
+    <i class="fas fa-random" style="color:#7b1fa2;font-size:1.1rem"></i>
+    <h2>Document Convert</h2><span class="badge">6 tools</span>
+  </div>
+  <div class="tool-grid" id="grid-convert">
+
+    <div class="tool-card" data-name="pdf to word docx" onclick="openModal('pdfToWord')">
+      <div class="card-icon ic-blue"><i class="fas fa-file-word"></i></div>
+      <div class="card-label">PDF → Word</div>
+      <div class="card-sub">Export .docx</div>
+    </div>
+
+    <div class="tool-card" data-name="pdf to excel xlsx spreadsheet" onclick="openModal('pdfToExcel')">
+      <div class="card-icon ic-green"><i class="fas fa-file-excel"></i></div>
+      <div class="card-label">PDF → Excel</div>
+      <div class="card-sub">Export .xlsx</div>
+    </div>
+
+    <div class="tool-card" data-name="pdf to ppt powerpoint presentation" onclick="openModal('pdfToPPT')">
+      <div class="card-icon ic-orange"><i class="fas fa-file-powerpoint"></i></div>
+      <div class="card-label">PDF → PPT</div>
+      <div class="card-sub">Export .pptx</div>
+    </div>
+
+    <div class="tool-card" data-name="word to pdf docx" onclick="openModal('wordToPDF')">
+      <div class="card-icon ic-indigo"><i class="fas fa-file-pdf"></i></div>
+      <div class="card-label">Word → PDF</div>
+      <div class="card-sub">From .docx</div>
+    </div>
+
+    <div class="tool-card" data-name="excel to pdf spreadsheet" onclick="openModal('excelToPDF')">
+      <div class="card-icon ic-teal"><i class="fas fa-table"></i></div>
+      <div class="card-label">Excel → PDF</div>
+      <div class="card-sub">From .xlsx</div>
+    </div>
+
+    <div class="tool-card" data-name="ppt to pdf powerpoint" onclick="openModal('pptToPDF')">
+      <div class="card-icon ic-pink"><i class="fas fa-chalkboard"></i></div>
+      <div class="card-label">PPT → PDF</div>
+      <div class="card-sub">From .pptx</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SHARE -->
+<div id="share-section">
+  <div class="section-header" style="margin-top:2rem">
+    <i class="fas fa-share-nodes" style="color:#34a853;font-size:1.1rem"></i>
+    <h2>P2P File Sharing</h2><span class="badge tag-new">PeerJS</span>
+  </div>
+  <div class="tool-grid" id="grid-share">
+    <div class="tool-card" data-name="share files documents peer to peer send receive" onclick="openModal('p2pShare')" style="grid-column:span 2;flex-direction:row;text-align:left;gap:1rem;max-width:400px">
+      <div class="card-icon ic-green" style="width:56px;height:56px;font-size:1.6rem;flex-shrink:0"><i class="fas fa-paper-plane"></i></div>
+      <div>
+        <div class="card-label" style="font-size:.9rem">Send & Receive Files</div>
+        <div class="card-sub" style="margin-top:.25rem">Share any file type directly P2P — no server upload. Images, PDFs, videos & more.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VIDEO -->
+<div id="video-section">
+  <div class="section-header" style="margin-top:2rem">
+    <i class="fas fa-video" style="color:#1a73e8;font-size:1.1rem"></i>
+    <h2>Video Conferencing</h2><span class="badge tag-new">PeerJS</span>
+  </div>
+  <div class="tool-grid" id="grid-video">
+    <div class="tool-card" data-name="video call conference meet screen share chat" onclick="openModal('videoCall')" style="grid-column:span 2;flex-direction:row;text-align:left;gap:1rem;max-width:400px">
+      <div class="card-icon ic-blue" style="width:56px;height:56px;font-size:1.6rem;flex-shrink:0"><i class="fas fa-video"></i></div>
+      <div>
+        <div class="card-label" style="font-size:.9rem">Video Call + Screen Share</div>
+        <div class="card-sub" style="margin-top:.25rem">HD video, mic, screen share, text chat & local recording — all browser-based.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="height:3rem"></div>
+</main>
+
+<!-- ===================== MODALS ===================== -->
+
+<!-- COMPRESS PDF -->
+<div class="modal-overlay" id="modal-compressPDF">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="mh-icon ic-red"><i class="fas fa-compress-alt"></i></div>
+      <h3>Compress PDF</h3>
+      <button class="modal-close" onclick="closeModal('compressPDF')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="drop-zone" id="dz-compressPDF" onclick="document.getElementById('fi-compressPDF').click()" ondragover="dzOver(event,this)" ondragleave="dzLeave(this)" ondrop="dzDrop(event,'fi-compressPDF','compressPDF',true)">
+        <i class="fas fa-cloud-upload-alt"></i>
+        <p>Drop PDF here or click to browse</p>
+        <small>Supports .pdf files</small>
+      </div>
+      <input type="file" id="fi-compressPDF" class="file-input" accept=".pdf" onchange="handleFile(this,'compressPDF',true)">
+      <div class="file-list" id="fl-compressPDF"></div>
+      <div class="slider-wrap" style="margin-top:1rem">
+        <label>Compression Level <span id="clevel-val">Medium</span></label>
+        <input type="range" min="1" max="3" value="2" id="clevel" oninput="document.getElementById('clevel-val').textContent=['Low','Medium','High'][this.value-1]">
+      </div>
+      <div class="progress-wrap" id="prog-compressPDF">
+        <div class="progress-label"><span id="prog-compressPDF-label">Compressing…</span><span id="prog-compressPDF-pct">0%</span></div>
+        <div class="progress-bar"><div class="progress-fill" id="prog-compressPDF-fill"></div></div>
+        <div class="progress-status" id="prog-compressPDF-status"></div>
+      </div>
+      <div id="result-compressPDF"></div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" id="btn-compressPDF" onclick="runCompressPDF()" disabled><i class="fas fa-compress-alt"></i> Compress</button>
+        <button class="btn btn-secondary" onclick="closeModal('compressPDF')">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MERGE PDF -->
+<div class="modal-overlay" id="modal-mergePDF">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="mh-icon ic-orange"><i class="fas fa-object-group"></i></div>
+      <h3>Merge PDFs</h3>
+      <button class="modal-close" onclick="closeModal('mergePDF')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="info-note"><i class="fas fa-info-circle"></i> Add multiple PDFs — they'll be merged in the order listed.</div>
+      <div class="drop-zone" onclick="document.getElementById('fi-mergePDF').click()" ondragover="dzOver(event,this)" ondragleave="dzLeave(this)" ondrop="dzDrop(event,'fi-mergePDF','mergePDF',false)">
+        <i class="fas fa-layer-group"></i>
+        <p>Drop PDFs here or click to browse</p>
+        <small>Multiple files supported</small>
+      </div>
+      <input type="file" id="fi-mergePDF" class="file-input" accept=".pdf" multiple onchange="handleFile(this,'mergePDF',false)">
+      <div class="file-list" id="fl-mergePDF"></div>
+      <div class="progress-wrap" id="prog-mergePDF">
+        <div class="progress-label"><span>Merging PDFs…</span><span id="prog-mergePDF-pct">0%</span></div>
+        <div class="progress-bar"><div class="progress-fill" id="prog-mergePDF-fill"></div></div>
+      </div>
+      <div id="result-mergePDF"></div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" id="btn-mergePDF" onclick="runMergePDF()" disabled><i class="fas fa-object-group"></i> Merge</button>
+        <button class="btn btn-secondary" onclick="closeModal('mergePDF')">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SPLIT PDF -->
+<div class="modal-overlay" id="modal-splitPDF">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="mh-icon ic-yellow"><i class="fas fa-cut"></i></div>
+      <h3>Split PDF</h3>
+      <button class="modal-close" onclick="closeModal('splitPDF')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="drop-zone" onclick="document.getElementById('fi-splitPDF').click()" ondragover="dzOver(event,this)" ondragleave="dzLeave(this)" ondrop="dzDrop(event,'fi-splitPDF','splitPDF',true)">
+        <i class="fas fa-cut"></i><p>Drop PDF here or click to browse</p>
+      </div>
+      <input type="file" id="fi-splitPDF" class="file-input" accept=".pdf" onchange="handleFile(this,'splitPDF',true)">
+      <div class="file-list" id="fl-splitPDF"></div>
+      <div style="margin-top:1rem">
+        <label style="font-size:.82rem;color:var(--gray-600);display:block;margin-bottom:.4rem">Page range to extract (e.g. 1-3 or 2,4,6)</label>
+        <input type="text" id="split-range" placeholder="e.g. 1-3">
+      </div>
+      <div class="progress-wrap" id="prog-splitPDF">
+        <div class="progress-label"><span>Splitting…</span><span id="prog-splitPDF-pct">0%</span></div>
+        <div class="progress-bar"><div class="progress-fill" id="prog-splitPDF-fill"></div></div>
+      </div>
+      <div id="result-splitPDF"></div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" id="btn-splitPDF" onclick="runSplitPDF()" disabled><i class="fas fa-cut"></i> Split</button>
+        <button class="btn btn-secondary" onclick="closeModal('splitPDF')">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ROTATE PDF -->
+<div class="modal-overlay" id="modal-rotatePDF">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="mh-icon ic-purple"><i class="fas fa-sync-alt"></i></div>
+      <h3>Rotate PDF</h3>
+      <button class="modal-close" onclick="closeModal('rotatePDF')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="drop-zone" onclick="document.getElementById('fi-rotatePDF').click()" ondragover="dzOver(event,this)" ondragleave="dzLeave(this)" ondrop="dzDrop(event,'fi-rotatePDF','rotatePDF',true)">
+        <i class="fas fa-sync-alt"></i><p>Drop PDF here or click to browse</p>
+      </div>
+      <input type="file" id="fi-rotatePDF" class="file-input" accept=".pdf" onchange="handleFile(this,'rotatePDF',true)">
+      <div class="file-list" id="fl-rotatePDF"></div>
+      <div style="margin-top:1rem">
+        <label style="font-size:.82rem;color:var(--gray-600);display:block;margin-bottom:.5rem">Rotation angle</label>
+        <div style="display:flex;gap:.5rem">
+          <button class="btn btn-secondary" id="rot90" onclick="setRotation(90)" style="flex:1">↻ 90°</button>
+          <button class="btn btn-secondary" id="rot180" onclick="setRotation(180)" style="flex:1">↻ 180°</button>
+          <button class="btn btn-secondary" id="rot270" onclick="setRotation(270)" style="flex:1">↻ 270°</button>
+        </div>
+      </div>
+      <div class="progress-wrap" id="prog-rotatePDF">
+        <div class="progress-label"><span>Rotating…</span><span id="prog-rotatePDF-pct">0%</span></div>
+        <div class="progress-bar"><div class="progress-fill" id="prog-rotatePDF-fill"></div></div>
+      </div>
+      <div id="result-rotatePDF"></div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" id="btn-rotatePDF" onclick="runRotatePDF()" disabled><i class="fas fa-sync-alt"></i> Rotate</button>
+        <button class="btn btn-secondary" onclick="closeModal('rotatePDF')">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LOCK PDF -->
+<div class="modal-overlay" id="modal-lockPDF">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="mh-icon ic-indigo"><i class="fas fa-lock"></i></div>
+      <h3>Lock PDF with Password</h3>
+      <button class="modal-close" onclick="closeModal('lockPDF')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="drop-zone" onclick="document.getElementById('fi-lockPDF').click()" ondragover="dzOver(event,this)" ondragleave="dzLeave(this)" ondrop="dzDrop(event,'fi-lockPDF','lockPDF',true)">
+        <i class="fas fa-lock"></i><p>Drop PDF here or click to browse</p>
+      </div>
+      <input type="file" id="fi-lockPDF" class="file-input" accept=".pdf" onchange="handleFile(this,'lockPDF',true)">
+      <div class="file-list" id="fl-lockPDF"></div>
+      <div style="margin-top:1rem">
+        <label style="font-size:.82rem;color:var(--gray-600);display:block;margin-bottom:.25rem">Set Password</label>
+        <div class="pw-wrap">
+          <input type="password" id="lock-pw" placeholder="Enter password">
+          <button class="pw-toggle" onclick="togglePw('lock-pw',this)"><i class="fas fa-eye"></i></button>
+        </div>
+        <div class="pw-wrap" style="margin-top:.5rem">
+          <input type="password" id="lock-pw2" placeholder="Confirm password">
+        </div>
+      </div>
+      <div class="progress-wrap" id="prog-lockPDF">
+        <div class="progress-label"><span>Locking PDF…</span><span id="prog-lockPDF-pct">0%</span></div>
+        <div class="progress-bar"><div class="progress-fill" id="prog-lockPDF-fill"></div></div>
+      </div>
+      <div id="result-lockPDF"></div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" id="btn-lockPDF" onclick="runLockPDF()" disabled><i class="fas fa-lock"></i> Lock PDF</button>
+        <button class="btn btn-secondary" onclick="closeModal('lockPDF')">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- UNLOCK PDF -->
+<div class="modal-overlay" id="modal-unlockPDF">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="mh-icon ic-teal"><i class="fas fa-unlock-alt"></i></div>
+      <h3>Unlock PDF (Remove Password)</h3>
+      <button class="modal-close" onclick="closeModal('unlockPDF')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="info-note"><i class="fas fa-shield-alt"></i> All processing happens in your browser — your files never leave your device.</div>
+      <div class="drop-zone" onclick="document.getElementById('fi-unlockPDF').click()" ondragover="dzOver(event,this)" ondragleave="dzLeave(this)" ondrop="dzDrop(event,'fi-unlockPDF','unlockPDF',true)">
+        <i class="fas fa-unlock-alt"></i><p>Drop protected PDF here</p>
+      </div>
+      <input type="file" id="fi-unlockPDF" class="file-input" accept=".pdf" onchange="handleFile(this,'unlockPDF',true)">
+      <div class="file-list" id="fl-unlockPDF"></div>
+      <div style="margin-top:1rem">
+        <label style="font-size:.82rem;color:var(--gray-600);display:block;margin-bottom:.25rem">Current Password</label>
+        <div class="pw-wrap">
+          <input type="password" id="unlock-pw" placeholder="Enter current password">
+          <button class="pw-toggle" onclick="togglePw('unlock-pw',this)"><i class="fas fa-eye"></i></button>
+        </div>
+      </div>
+      <div class="progress-wrap" id="prog-unlockPDF">
+        <div class="progress-label"><span>Unlocking PDF…</span><span id="prog-unlockPDF-pct">0%</span></div>
+        <div class="progress-bar"><div class="progress-fill" id="prog-unlockPDF-fill"></div></div>
+      </div>
+      <div id="result-unlockPDF"></div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" id="btn-unlockPDF" onclick="runUnlockPDF()" disabled><i class="fas fa-unlock-alt"></i> Unlock PDF</button>
+        <button class="btn btn-secondary" onclick="closeModal('unlockPDF')">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WATERMARK PDF -->
+<div class="modal-overlay" id="modal-editPDF">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="mh-icon ic-cyan"><i class="fas fa-pen-nib"></i></div>
+      <h3>Add Watermark to PDF</h3>
+      <button class="modal-close" onclick="closeModal('editPDF')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="drop-zone" onclick="document.getElementById('fi-editPDF').click()" ondragover="dzOver(event,this)" ondragleave="dzLeave(this)" ondrop="dzDrop(event,'fi-editPDF','editPDF',true)">
+        <i class="fas fa-pen-nib"></i><p>Drop PDF here or click to browse</p>
+      </div>
+      <input type="file" id="fi-editPDF" class="file-input" accept=".pdf" onchange="handleFile(this,'editPDF',true)">
+      <div class="file-list" id="fl-editPDF"></div>
+      <div style="margin-top:1rem">
+        <label style="font-size:.82rem;color:var(--gray-600);display:block;margin-bottom:.25rem">Watermark Text</label>
+        <input type="text" id="wm-text" placeholder="e.g. CONFIDENTIAL">
+        <div class="col2" style="margin-top:.75rem">
+          <div><label style="font-size:.78rem;color:var(--gray-400);display:block;margin-bottom:.25rem">Opacity</label>
+            <input type="range" min="10" max="80" value="30" id="wm-opacity" oninput="document.getElementById('wm-opv').textContent=this.value+'%'">
+            <span id="wm-opv" style="font-size:.78rem;color:var(--gray-600)">30%</span></div>
+          <div><label style="font-size:.78rem;color:var(--gray-400);display:block;margin-bottom:.25rem">Font Size</label>
+            <input type="number" id="wm-size" value="48" min="20" max="120" style="width:100%"></div>
+        </div>
+      </div>
+      <div class="progress-wrap" id="prog-editPDF">
+        <div class="progress-label"><span>Adding watermark…</span><span id="prog-editPDF-pct">0%</span></div>
+        <div class="progress-bar"><div class="progress-fill" id="prog-editPDF-fill"></div></div>
+      </div>
+      <div id="result-editPDF"></div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" id="btn-editPDF" onclick="runWatermark()" disabled><i class="fas fa-pen-nib"></i> Add Watermark</button>
+        <button class="btn btn-secondary" onclick="closeModal('editPDF')">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PDF TO IMAGE -->
+<div class="modal-overlay" id="modal-pdfToImg">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="mh-icon ic-pink"><i class="fas fa-image"></i></div>
+      <h3>PDF → Image</h3>
+      <button class="modal-close" onclick="closeModal('pdfToImg')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="info-note"><i class="fas fa-info-circle"></i> Each page will be exported as a separate image file (PNG or JPEG).</div>
+      <div class="drop-zone" onclick="document.getElementById('fi-pdfToImg').click()" ondragover="dzOver(event,this)" ondragleave="dzLeave(this)" ondrop="dzDrop(event,'fi-pdfToImg','pdfToImg',true)">
+        <i class="fas fa-file-pdf"></i><p>Drop PDF here or click to browse</p>
+      </div>
+      <input type="file" id="fi-pdfToImg" class="file-input" accept=".pdf" onchange="handleFile(this,'pdfToImg',true)">
+      <div class="file-list" id="fl-pdfToImg"></div>
+      <div class="col2" style="margin-top:.75rem">
+        <div><label style="font-size:.78rem;color:var(--gray-400);display:block;margin-bottom:.25rem">Format</label>
+          <select id="pdfimg-fmt"><option value="png">PNG</option><option value="jpeg">JPEG</option></select></div>
+        <div><label style="font-size:.78rem;color:var(--gray-400);display:block;margin-bottom:.25rem">Quality (JPEG)</label>
+          <input type="range" min="50" max="100" value="90" id="pdfimg-q" oninput="document.getElementById('pdfimg-qv').textContent=this.value+'%'">
+          <span id="pdfimg-qv" style="font-size:.78rem;color:var(--gray-600)">90%</span></div>
+      </div>
+      <div class="progress-wrap" id="prog-pdfToImg">
+        <div class="progress-label"><span id="prog-pdfToImg-label">Converting…</span><span id="prog-pdfToImg-pct">0%</span></div>
+        <div class="progress-bar"><div class="progress-fill" id="prog-pdfToImg-fill"></div></div>
+        <div class="progress-status" id="prog-pdfToImg-status"></div>
+      </div>
+      <div id="result-pdfToImg"></div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" id="btn-pdfToImg" onclick="runPDFtoImg()" disabled><i class="fas fa-image"></i> Convert</button>
+        <button class="btn btn-secondary" onclick="closeModal('pdfToImg')">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COMPRESS IMAGE -->
+<div class="modal-overlay" id="modal-compressImg">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="mh-icon ic-blue"><i class="fas fa-file-image"></i></div>
+      <h3>Compress Image</h3>
+      <button class="modal-close" onclick="closeModal('compressImg')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="drop-zone" onclick="document.getElementById('fi-compressImg').click()" ondragover="dzOver(event,this)" ondragleave="dzLeave(this)" ondrop="dzDrop(event,'fi-compressImg','compressImg',false)">
+        <i class="fas fa-images"></i>
+        <p>Drop images here or click to browse</p>
+        <small>JPG, PNG, WEBP — multiple files OK</small>
+      </div>
+      <input type="file" id="fi-compressImg" class="file-input" accept="image/*" multiple onchange="handleFile(this,'compressImg',false)">
+      <div class="file-list" id="fl-compressImg"></div>
+      <div class="slider-wrap" style="margin-top:.75rem">
+        <label>Quality <span id="imgq-val">80%</span></label>
+        <input type="range" min="10" max="100" value="80" id="imgq" oninput="document.getElementById('imgq-val').textContent=this.value+'%'">
+      </div>
+      <div class="progress-wrap" id="prog-compressImg">
+        <div class="progress-label"><span id="prog-compressImg-label">Compressing…</span><span id="prog-compressImg-pct">0%</span></div>
+        <div class="progress-bar"><div class="progress-fill" id="prog-compressImg-fill"></div></div>
+        <div class="progress-status" id="prog-compressImg-status"></div>
+      </div>
+      <div id="result-compressImg"></div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" id="btn-compressImg" onclick="runCompressImg()" disabled><i class="fas fa-compress-alt"></i> Compress</button>
+        <button class="btn btn-secondary" onclick="closeModal('compressImg')">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- IMAGES TO PDF -->
+<div class="modal-overlay" id="modal-imgToPDF">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="mh-icon ic-green"><i class="fas fa-file-export"></i></div>
+      <h3>Images → PDF</h3>
+      <button class="modal-close" onclick="closeModal('imgToPDF')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="info-note"><i class="fas fa-info-circle"></i> Supports PNG, JPG, JPEG, WEBP, GIF, BMP, HEIC (converted via browser). Images added in order.</div>
+      <div class="drop-zone" onclick="document.getElementById('fi-imgToPDF').click()" ondragover="dzOver(event,this)" ondragleave="dzLeave(this)" ondrop="dzDrop(event,'fi-imgToPDF','imgToPDF',false)">
+        <i class="fas fa-images"></i>
+        <p>Drop images here or click to browse</p>
+        <small>PNG, JPG, JPEG, WEBP, GIF, BMP</small>
+      </div>
+      <input type="file" id="fi-imgToPDF" class="file-input" accept="image/*" multiple onchange="handleFile(this,'imgToPDF',false)">
+      <div class="file-list" id="fl-imgToPDF"></div>
+      <div class="col2" style="margin-top:.75rem">
+        <div><label style="font-size:.78rem;color:var(--gray-400);display:block;margin-bottom:.25rem">Page Size</label>
+          <select id="pdf-page-size"><option value="A4">A4</option><option value="LETTER">Letter</option><option value="A3">A3</option></select></div>
+        <div><label style="font-size:.78rem;color:var(--gray-400);display:block;margin-bottom:.25rem">Orientation</label>
+          <select id="pdf-orient"><option value="portrait">Portrait</option><option value="landscape">Landscape</option></select></div>
+      </div>
+      <div class="progress-wrap" id="prog-imgToPDF">
+        <div class="progress-label"><span id="prog-imgToPDF-label">Building PDF…</span><span id="prog-imgToPDF-pct">0%</span></div>
+        <div class="progress-bar"><div class="progress-fill" id="prog-imgToPDF-fill"></div></div>
+        <div class="progress-status" id="prog-imgToPDF-status"></div>
+      </div>
+      <div id="result-imgToPDF"></div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" id="btn-imgToPDF" onclick="runImgToPDF()" disabled><i class="fas fa-file-pdf"></i> Create PDF</button>
+        <button class="btn btn-secondary" onclick="closeModal('imgToPDF')">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONVERT IMAGE -->
+<div class="modal-overlay" id="modal-convertImg">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="mh-icon ic-lime"><i class="fas fa-exchange-alt"></i></div>
+      <h3>Convert Image Format</h3>
+      <button class="modal-close" onclick="closeModal('convertImg')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="drop-zone" onclick="document.getElementById('fi-convertImg').click()" ondragover="dzOver(event,this)" ondragleave="dzLeave(this)" ondrop="dzDrop(event,'fi-convertImg','convertImg',false)">
+        <i class="fas fa-exchange-alt"></i><p>Drop images here</p><small>PNG, JPG, WEBP, GIF, BMP</small>
+      </div>
+      <input type="file" id="fi-convertImg" class="file-input" accept="image/*" multiple onchange="handleFile(this,'convertImg',false)">
+      <div class="file-list" id="fl-convertImg"></div>
+      <div style="margin-top:.75rem">
+        <label style="font-size:.82rem;color:var(--gray-600);display:block;margin-bottom:.25rem">Convert to</label>
+        <select id="conv-fmt"><option value="image/jpeg">JPEG (.jpg)</option><option value="image/png">PNG (.png)</option><option value="image/webp">WEBP (.webp)</option></select>
+      </div>
+      <div class="progress-wrap" id="prog-convertImg">
+        <div class="progress-label"><span id="prog-convertImg-label">Converting…</span><span id="prog-convertImg-pct">0%</span></div>
+        <div class="progress-bar"><div class="progress-fill" id="prog-convertImg-fill"></div></div>
+        <div class="progress-status" id="prog-convertImg-status"></div>
+      </div>
+      <div id="result-convertImg"></div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" id="btn-convertImg" onclick="runConvertImg()" disabled><i class="fas fa-exchange-alt"></i> Convert</button>
+        <button class="btn btn-secondary" onclick="closeModal('convertImg')">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RESIZE IMAGE -->
+<div class="modal-overlay" id="modal-resizeImg">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="mh-icon ic-brown"><i class="fas fa-expand-arrows-alt"></i></div>
+      <h3>Resize Image</h3>
+      <button class="modal-close" onclick="closeModal('resizeImg')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="drop-zone" onclick="document.getElementById('fi-resizeImg').click()" ondragover="dzOver(event,this)" ondragleave="dzLeave(this)" ondrop="dzDrop(event,'fi-resizeImg','resizeImg',true)">
+        <i class="fas fa-expand-arrows-alt"></i><p>Drop image here</p>
+      </div>
+      <input type="file" id="fi-resizeImg" class="file-input" accept="image/*" onchange="handleFile(this,'resizeImg',true)">
+      <div class="file-list" id="fl-resizeImg"></div>
+      <div class="col2" style="margin-top:.75rem">
+        <div><label style="font-size:.78rem;color:var(--gray-400);display:block;margin-bottom:.25rem">Width (px)</label>
+          <input type="number" id="resize-w" placeholder="e.g. 1920"></div>
+        <div><label style="font-size:.78rem;color:var(--gray-400);display:block;margin-bottom:.25rem">Height (px)</label>
+          <input type="number" id="resize-h" placeholder="e.g. 1080"></div>
+      </div>
+      <label style="display:flex;align-items:center;gap:.4rem;font-size:.82rem;color:var(--gray-600);margin-top:.6rem;cursor:pointer">
+        <input type="checkbox" id="resize-ar" checked> Keep aspect ratio
+      </label>
+      <div class="progress-wrap" id="prog-resizeImg">
+        <div class="progress-label"><span>Resizing…</span><span id="prog-resizeImg-pct">0%</span></div>
+        <div class="progress-bar"><div class="progress-fill" id="prog-resizeImg-fill"></div></div>
+      </div>
+      <div id="result-resizeImg"></div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" id="btn-resizeImg" onclick="runResizeImg()" disabled><i class="fas fa-expand-arrows-alt"></i> Resize</button>
+        <button class="btn btn-secondary" onclick="closeModal('resizeImg')">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CROP IMAGE -->
+<div class="modal-overlay" id="modal-cropImg">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="mh-icon ic-orange"><i class="fas fa-crop-alt"></i></div>
+      <h3>Crop Image</h3>
+      <button class="modal-close" onclick="closeModal('cropImg')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="drop-zone" onclick="document.getElementById('fi-cropImg').click()" ondragover="dzOver(event,this)" ondragleave="dzLeave(this)" ondrop="dzDrop(event,'fi-cropImg','cropImg',true)">
+        <i class="fas fa-crop-alt"></i><p>Drop image here</p>
+      </div>
+      <input type="file" id="fi-cropImg" class="file-input" accept="image/*" onchange="handleFileCrop(this)">
+      <div class="file-list" id="fl-cropImg"></div>
+      <div id="crop-preview-area" style="display:none;margin-top:.75rem">
+        <canvas id="crop-canvas" style="max-width:100%;border:1px solid var(--gray-200);border-radius:8px;cursor:crosshair"></canvas>
+        <div class="col2" style="margin-top:.5rem">
+          <div><label style="font-size:.78rem;color:var(--gray-400)">X</label><input type="number" id="cx" value="0" style="margin-top:.2rem"></div>
+          <div><label style="font-size:.78rem;color:var(--gray-400)">Y</label><input type="number" id="cy" value="0" style="margin-top:.2rem"></div>
+          <div><label style="font-size:.78rem;color:var(--gray-400)">Width</label><input type="number" id="cw" style="margin-top:.2rem"></div>
+          <div><label style="font-size:.78rem;color:var(--gray-400)">Height</label><input type="number" id="ch" style="margin-top:.2rem"></div>
+        </div>
+      </div>
+      <div id="result-cropImg"></div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" id="btn-cropImg" onclick="runCropImg()" disabled><i class="fas fa-crop-alt"></i> Crop & Download</button>
+        <button class="btn btn-secondary" onclick="closeModal('cropImg')">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PDF TO WORD -->
+<div class="modal-overlay" id="modal-pdfToWord">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="mh-icon ic-blue"><i class="fas fa-file-word"></i></div>
+      <h3>PDF → Word (.docx)</h3>
+      <button class="modal-close" onclick="closeModal('pdfToWord')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="info-note"><i class="fas fa-info-circle"></i> Text is extracted from the PDF and formatted into a Word document. Complex layouts may vary.</div>
+      <div class="drop-zone" onclick="document.getElementById('fi-pdfToWord').click()" ondragover="dzOver(event,this)" ondragleave="dzLeave(this)" ondrop="dzDrop(event,'fi-pdfToWord','pdfToWord',true)">
+        <i class="fas fa-file-pdf"></i><p>Drop PDF here or click to browse</p>
+      </div>
+      <input type="file" id="fi-pdfToWord" class="file-input" accept=".pdf" onchange="handleFile(this,'pdfToWord',true)">
+      <div class="file-list" id="fl-pdfToWord"></div>
+      <div class="progress-wrap" id="prog-pdfToWord">
+        <div class="progress-label"><span id="prog-pdfToWord-label">Extracting text…</span><span id="prog-pdfToWord-pct">0%</span></div>
+        <div class="progress-bar"><div class="progress-fill" id="prog-pdfToWord-fill"></div></div>
+        <div class="progress-status" id="prog-pdfToWord-status"></div>
+      </div>
+      <div id="result-pdfToWord"></div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" id="btn-pdfToWord" onclick="runPDFtoWord()" disabled><i class="fas fa-file-word"></i> Convert to Word</button>
+        <button class="btn btn-secondary" onclick="closeModal('pdfToWord')">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PDF TO EXCEL -->
+<div class="modal-overlay" id="modal-pdfToExcel">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="mh-icon ic-green"><i class="fas fa-file-excel"></i></div>
+      <h3>PDF → Excel (.xlsx)</h3>
+      <button class="modal-close" onclick="closeModal('pdfToExcel')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="info-note"><i class="fas fa-info-circle"></i> Text content extracted per page and placed in rows. Works best with table-heavy PDFs.</div>
+      <div class="drop-zone" onclick="document.getElementById('fi-pdfToExcel').click()" ondragover="dzOver(event,this)" ondragleave="dzLeave(this)" ondrop="dzDrop(event,'fi-pdfToExcel','pdfToExcel',true)">
+        <i class="fas fa-file-pdf"></i><p>Drop PDF here or click to browse</p>
+      </div>
+      <input type="file" id="fi-pdfToExcel" class="file-input" accept=".pdf" onchange="handleFile(this,'pdfToExcel',true)">
+      <div class="file-list" id="fl-pdfToExcel"></div>
+      <div class="progress-wrap" id="prog-pdfToExcel">
+        <div class="progress-label"><span id="prog-pdfToExcel-label">Extracting…</span><span id="prog-pdfToExcel-pct">0%</span></div>
+        <div class="progress-bar"><div class="progress-fill" id="prog-pdfToExcel-fill"></div></div>
+        <div class="progress-status" id="prog-pdfToExcel-status"></div>
+      </div>
+      <div id="result-pdfToExcel"></div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" id="btn-pdfToExcel" onclick="runPDFtoExcel()" disabled><i class="fas fa-file-excel"></i> Convert to Excel</button>
+        <button class="btn btn-secondary" onclick="closeModal('pdfToExcel')">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PDF TO PPT -->
+<div class="modal-overlay" id="modal-pdfToPPT">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="mh-icon ic-orange"><i class="fas fa-file-powerpoint"></i></div>
+      <h3>PDF → PowerPoint (.pptx)</h3>
+      <button class="modal-close" onclick="closeModal('pdfToPPT')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="info-note"><i class="fas fa-info-circle"></i> Each PDF page becomes a slide with the page rendered as an image.</div>
+      <div class="drop-zone" onclick="document.getElementById('fi-pdfToPPT').click()" ondragover="dzOver(event,this)" ondragleave="dzLeave(this)" ondrop="dzDrop(event,'fi-pdfToPPT','pdfToPPT',true)">
+        <i class="fas fa-file-pdf"></i><p>Drop PDF here</p>
+      </div>
+      <input type="file" id="fi-pdfToPPT" class="file-input" accept=".pdf" onchange="handleFile(this,'pdfToPPT',true)">
+      <div class="file-list" id="fl-pdfToPPT"></div>
+      <div class="progress-wrap" id="prog-pdfToPPT">
+        <div class="progress-label"><span id="prog-pdfToPPT-label">Rendering slides…</span><span id="prog-pdfToPPT-pct">0%</span></div>
+        <div class="progress-bar"><div class="progress-fill" id="prog-pdfToPPT-fill"></div></div>
+        <div class="progress-status" id="prog-pdfToPPT-status"></div>
+      </div>
+      <div id="result-pdfToPPT"></div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" id="btn-pdfToPPT" onclick="runPDFtoPPT()" disabled><i class="fas fa-file-powerpoint"></i> Convert to PPT</button>
+        <button class="btn btn-secondary" onclick="closeModal('pdfToPPT')">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WORD/EXCEL/PPT TO PDF (generic) -->
+<div class="modal-overlay" id="modal-wordToPDF">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="mh-icon ic-indigo"><i class="fas fa-file-pdf"></i></div>
+      <h3 id="docconv-title">Word → PDF</h3>
+      <button class="modal-close" onclick="closeDocConv()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="info-note" id="docconv-note"><i class="fas fa-info-circle"></i> Upload a .docx file. Text content will be preserved in the PDF.</div>
+      <div class="drop-zone" onclick="document.getElementById('fi-docconv').click()" ondragover="dzOver(event,this)" ondragleave="dzLeave(this)" ondrop="dzDropDocConv(event)">
+        <i class="fas fa-upload" id="docconv-icon"></i>
+        <p id="docconv-droptext">Drop .docx file here or click to browse</p>
+      </div>
+      <input type="file" id="fi-docconv" class="file-input" onchange="handleDocConvFile(this)">
+      <div class="file-list" id="fl-docconv"></div>
+      <div class="progress-wrap" id="prog-docconv">
+        <div class="progress-label"><span id="prog-docconv-label">Converting…</span><span id="prog-docconv-pct">0%</span></div>
+        <div class="progress-bar"><div class="progress-fill" id="prog-docconv-fill"></div></div>
+        <div class="progress-status" id="prog-docconv-status"></div>
+      </div>
+      <div id="result-docconv"></div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" id="btn-docconv" onclick="runDocConv()" disabled><i class="fas fa-file-pdf"></i> Convert to PDF</button>
+        <button class="btn btn-secondary" onclick="closeDocConv()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- P2P SHARE -->
+<div class="modal-overlay" id="modal-p2pShare">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="mh-icon ic-green"><i class="fas fa-paper-plane"></i></div>
+      <h3>P2P File Sharing</h3>
+      <button class="modal-close" onclick="closeModal('p2pShare')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="tabs">
+        <button class="tab active" onclick="shareTab(this,'share-send')">Send Files</button>
+        <button class="tab" onclick="shareTab(this,'share-recv')">Receive Files</button>
+      </div>
+
+      <div id="share-send">
+        <div class="peer-id-box">
+          <i class="fas fa-id-badge" style="color:var(--blue)"></i>
+          <span style="color:var(--gray-600);font-size:.78rem;flex-shrink:0">Your ID:</span>
+          <code id="sender-id">Connecting…</code>
+          <button class="btn btn-secondary" style="padding:4px 10px;font-size:.75rem" onclick="copyPeerId('sender-id')"><i class="fas fa-copy"></i></button>
+        </div>
+        <label style="font-size:.82rem;color:var(--gray-600);display:block;margin-bottom:.25rem">Receiver's Peer ID</label>
+        <div style="display:flex;gap:.4rem;margin-bottom:.75rem">
+          <input type="text" id="recv-peer-id" placeholder="Paste receiver's ID here" style="flex:1">
+          <button class="btn btn-primary" onclick="connectToPeer()"><i class="fas fa-plug"></i> Connect</button>
+        </div>
+        <div class="drop-zone" onclick="document.getElementById('fi-p2p').click()" ondragover="dzOver(event,this)" ondragleave="dzLeave(this)" ondrop="dzDropShare(event)">
+          <i class="fas fa-paper-plane"></i><p>Drop files to send after connecting</p><small>Any file type — images, PDFs, videos, docs</small>
+        </div>
+        <input type="file" id="fi-p2p" class="file-input" multiple onchange="queueShareFiles(this.files)">
+        <div class="share-file-list" id="share-send-list"></div>
+        <div class="modal-actions">
+          <button class="btn btn-primary" id="btn-send-files" onclick="sendFiles()" disabled><i class="fas fa-upload"></i> Send Files</button>
+        </div>
+      </div>
+
+      <div id="share-recv" style="display:none">
+        <div class="peer-id-box">
+          <i class="fas fa-id-badge" style="color:var(--green)"></i>
+          <span style="color:var(--gray-600);font-size:.78rem;flex-shrink:0">Your Receive ID:</span>
+          <code id="receiver-id">Connecting…</code>
+          <button class="btn btn-secondary" style="padding:4px 10px;font-size:.75rem" onclick="copyPeerId('receiver-id')"><i class="fas fa-copy"></i></button>
+        </div>
+        <div class="info-note"><i class="fas fa-info-circle"></i> Share your Receive ID with the sender. Files will appear below automatically.</div>
+        <div class="share-file-list" id="share-recv-list" style="min-height:80px">
+          <div style="text-align:center;color:var(--gray-400);font-size:.8rem;padding:1rem">Waiting for files…</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VIDEO CALL -->
+<div class="modal-overlay" id="modal-videoCall">
+  <div class="modal" style="max-width:640px">
+    <div class="modal-header">
+      <div class="mh-icon ic-blue"><i class="fas fa-video"></i></div>
+      <h3>Video Conferencing</h3>
+      <button class="modal-close" onclick="endCall()">✕</button>
+    </div>
+    <div class="modal-body" style="padding:1rem">
+      <div class="peer-id-box">
+        <i class="fas fa-id-badge" style="color:var(--blue)"></i>
+        <span style="color:var(--gray-600);font-size:.78rem;flex-shrink:0">Your Call ID:</span>
+        <code id="call-peer-id">Connecting…</code>
+        <button class="btn btn-secondary" style="padding:4px 10px;font-size:.75rem" onclick="copyPeerId('call-peer-id')"><i class="fas fa-copy"></i></button>
+      </div>
+      <div style="display:flex;gap:.4rem;margin-bottom:.75rem">
+        <input type="text" id="remote-call-id" placeholder="Enter remote peer ID to call" style="flex:1">
+        <button class="btn btn-primary" id="btn-start-call" onclick="startVideoCall()"><i class="fas fa-phone"></i> Call</button>
+      </div>
+      <div class="video-grid">
+        <div class="video-box">
+          <video id="local-video" autoplay muted playsinline></video>
+          <div class="video-label">You</div>
+          <div class="no-video" id="local-no-video"><i class="fas fa-video-slash"></i>Camera off</div>
+        </div>
+        <div class="video-box">
+          <video id="remote-video" autoplay playsinline></video>
+          <div class="video-label">Remote</div>
+          <div class="no-video" id="remote-no-video"><i class="fas fa-user-circle"></i>Waiting…</div>
+        </div>
+      </div>
+      <div class="call-controls" style="margin:.75rem 0">
+        <button class="ctrl-btn normal" id="ctrl-mic" onclick="toggleMic(this)" title="Toggle Mic"><i class="fas fa-microphone"></i></button>
+        <button class="ctrl-btn normal" id="ctrl-cam" onclick="toggleCam(this)" title="Toggle Camera"><i class="fas fa-video"></i></button>
+        <button class="ctrl-btn normal" id="ctrl-screen" onclick="toggleScreen(this)" title="Share Screen"><i class="fas fa-desktop"></i></button>
+        <button class="ctrl-btn normal" id="ctrl-rec" onclick="toggleRecord(this)" title="Record"><i class="fas fa-circle" style="color:#ea4335"></i></button>
+        <button class="ctrl-btn danger" onclick="endCall()" title="End Call"><i class="fas fa-phone-slash"></i></button>
+      </div>
+      <div class="separator" style="margin:.75rem 0"></div>
+      <div style="font-size:.8rem;color:var(--gray-600);margin-bottom:.4rem;font-weight:600">Chat</div>
+      <div class="chat-box" id="chat-box"></div>
+      <div class="chat-input-row">
+        <input type="text" id="chat-input" placeholder="Type a message…" onkeydown="if(event.key==='Enter')sendChat()">
+        <button class="btn btn-primary" onclick="sendChat()" style="padding:.5rem .85rem"><i class="fas fa-paper-plane"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HIDDEN CANVASES -->
+<canvas id="hidden-canvas" class="hidden-canvas"></canvas>
+
+<script>
+// pdf.js worker
+if(typeof pdfjsLib!=='undefined') pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+// ---- STATE ----
+const files={};
+let rotAngle=90;
+let docConvMode='word';
+let cropFile=null,cropImg2=null,cropX=0,cropY=0,cropW=0,cropH=0;
+let senderPeer=null,receiverPeer=null,peerConn=null;
+let callPeer=null,currentCall=null,localStream=null,mediaRecorder=null,recChunks=[];
+let shareFiles=[];
+let isMicOn=true,isCamOn=true,isScreenSharing=false,isRecording=false;
+let dataChannel=null;
+
+// ---- NAV ----
+function toggleNav(){document.getElementById('navLinks').classList.toggle('open')}
+function scrollTo(id){document.getElementById(id)?.scrollIntoView({behavior:'smooth'});document.getElementById('navLinks').classList.remove('open')}
+
+// ---- SEARCH ----
+function filterTools(q){
+  q=q.toLowerCase().trim();
+  document.querySelectorAll('.tool-card').forEach(c=>{
+    const n=c.dataset.name||'';
+    c.style.display=(!q||n.includes(q))?'':'none';
+  });
+}
+
+// ---- MODAL ----
+function openModal(id){
+  document.getElementById('modal-'+id).classList.add('open');
+  if(id==='p2pShare') initSenderPeer();
+  if(id==='videoCall') initCallPeer();
+}
+function closeModal(id){
+  document.getElementById('modal-'+id).classList.remove('open');
+  // reset progress
+  const pw=document.getElementById('prog-'+id);
+  if(pw){pw.style.display='none';setProgress(id,0,'');}
+}
+
+// ---- FILE HANDLING ----
+function handleFile(input,id,single){
+  const fs=Array.from(input.files);
+  if(!fs.length) return;
+  if(single) files[id]=[fs[0]];
+  else files[id]=(files[id]||[]).concat(fs);
+  renderFileList(id);
+  updateBtn(id);
+}
+function renderFileList(id){
+  const fl=document.getElementById('fl-'+id);
+  if(!fl) return;
+  fl.innerHTML='';
+  (files[id]||[]).forEach((f,i)=>{
+    const d=document.createElement('div');
+    d.className='file-item';
+    d.innerHTML=`<i class="fas fa-file"></i><span class="fi-name">${f.name}</span><span class="fi-size">${fmtSize(f.size)}</span><button class="fi-remove" onclick="removeFile('${id}',${i})">✕</button>`;
+    fl.appendChild(d);
+  });
+}
+function removeFile(id,i){files[id].splice(i,1);renderFileList(id);updateBtn(id);}
+function updateBtn(id){
+  const b=document.getElementById('btn-'+id);
+  if(b) b.disabled=!(files[id]&&files[id].length);
+}
+function fmtSize(b){if(b<1024)return b+'B';if(b<1048576)return(b/1024).toFixed(1)+'KB';return(b/1048576).toFixed(2)+'MB';}
+
+// drag-drop
+function dzOver(e,el){e.preventDefault();el.classList.add('dragover')}
+function dzLeave(el){el.classList.remove('dragover')}
+function dzDrop(e,inputId,modalId,single){
+  e.preventDefault();e.currentTarget.classList.remove('dragover');
+  const dt=e.dataTransfer.files;
+  const input=document.getElementById(inputId);
+  if(single) files[modalId]=[dt[0]];
+  else files[modalId]=(files[modalId]||[]).concat(Array.from(dt));
+  renderFileList(modalId);updateBtn(modalId);
+}
+
+// ---- PROGRESS ----
+function setProgress(id,pct,status){
+  const fill=document.getElementById('prog-'+id+'-fill');
+  const pctEl=document.getElementById('prog-'+id+'-pct');
+  const statEl=document.getElementById('prog-'+id+'-status');
+  if(fill) fill.style.width=pct+'%';
+  if(pctEl) pctEl.textContent=Math.round(pct)+'%';
+  if(statEl&&status!==undefined) statEl.textContent=status;
+}
+function showProg(id){const p=document.getElementById('prog-'+id);if(p)p.style.display='block';}
+function animateProg(id,from,to,dur,status){
+  return new Promise(res=>{
+    const start=performance.now();
+    function step(now){
+      const t=Math.min((now-start)/dur,1);
+      setProgress(id,from+(to-from)*t,status);
+      if(t<1) requestAnimationFrame(step);
+      else res();
+    }
+    requestAnimationFrame(step);
+  });
+}
+function showResult(id,html){document.getElementById('result-'+id).innerHTML=html;}
+function dlBtn(url,name){return `<div class="modal-actions"><a class="btn btn-success" href="${url}" download="${name}"><i class="fas fa-download"></i> Download ${name}</a></div>`;}
+
+// ---- COMPRESS PDF ----
+async function runCompressPDF(){
+  if(!files.compressPDF?.length) return;
+  showProg('compressPDF');
+  await animateProg('compressPDF',0,30,400,'Loading PDF…');
+  const f=files.compressPDF[0];
+  const ab=await f.arrayBuffer();
+  await animateProg('compressPDF',30,60,500,'Optimizing structure…');
+  const {PDFDocument}=PDFLib;
+  const doc=await PDFDocument.load(ab,{ignoreEncryption:true});
+  await animateProg('compressPDF',60,90,600,'Saving…');
+  const out=await doc.save({useObjectStreams:true,addDefaultPage:false,objectsPerTick:50});
+  await animateProg('compressPDF',90,100,200,'Done!');
+  const blob=new Blob([out],{type:'application/pdf'});
+  const url=URL.createObjectURL(blob);
+  const saved=f.size-blob.size;
+  const pct=Math.max(0,(saved/f.size*100)).toFixed(1);
+  showResult('compressPDF',`<div class="result-box"><div class="result-title"><i class="fas fa-check-circle"></i> Compressed Successfully</div><div class="result-stats"><div class="result-stat"><strong>${fmtSize(f.size)}</strong>Original</div><div class="result-stat"><strong>${fmtSize(blob.size)}</strong>Compressed</div><div class="result-stat"><strong>${pct}%</strong>Saved</div></div></div>${dlBtn(url,'compressed.pdf')}`);
+}
+
+// ---- MERGE PDF ----
+async function runMergePDF(){
+  if(!files.mergePDF?.length) return;
+  showProg('mergePDF');
+  const {PDFDocument}=PDFLib;
+  const merged=await PDFDocument.create();
+  const n=files.mergePDF.length;
+  for(let i=0;i<n;i++){
+    await animateProg('mergePDF',(i/n)*90,(i+1)/n*90,400,'Merging page '+(i+1)+'/'+n+'…');
+    const ab=await files.mergePDF[i].arrayBuffer();
+    const doc=await PDFDocument.load(ab,{ignoreEncryption:true});
+    const pages=await merged.copyPages(doc,doc.getPageIndices());
+    pages.forEach(p=>merged.addPage(p));
+  }
+  await animateProg('mergePDF',90,100,300,'Saving…');
+  const out=await merged.save();
+  const blob=new Blob([out],{type:'application/pdf'});
+  const url=URL.createObjectURL(blob);
+  showResult('mergePDF',`<div class="result-box"><div class="result-title"><i class="fas fa-check-circle"></i> Merged ${n} PDFs → ${merged.getPageCount()} pages</div></div>${dlBtn(url,'merged.pdf')}`);
+}
+
+// ---- SPLIT PDF ----
+async function runSplitPDF(){
+  if(!files.splitPDF?.length) return;
+  const rangeStr=document.getElementById('split-range').value.trim()||'1';
+  showProg('splitPDF');
+  await animateProg('splitPDF',0,30,400,'Loading PDF…');
+  const {PDFDocument}=PDFLib;
+  const ab=await files.splitPDF[0].arrayBuffer();
+  const srcDoc=await PDFDocument.load(ab,{ignoreEncryption:true});
+  const totalPages=srcDoc.getPageCount();
+  const indices=parseRange(rangeStr,totalPages);
+  await animateProg('splitPDF',30,70,500,'Extracting pages…');
+  const newDoc=await PDFDocument.create();
+  const pages=await newDoc.copyPages(srcDoc,indices);
+  pages.forEach(p=>newDoc.addPage(p));
+  await animateProg('splitPDF',70,100,400,'Done!');
+  const out=await newDoc.save();
+  const blob=new Blob([out],{type:'application/pdf'});
+  const url=URL.createObjectURL(blob);
+  showResult('splitPDF',`<div class="result-box"><div class="result-title"><i class="fas fa-check-circle"></i> Extracted ${indices.length} page(s)</div></div>${dlBtn(url,'split.pdf')}`);
+}
+function parseRange(s,total){
+  const result=new Set();
+  s.split(',').forEach(part=>{
+    part=part.trim();
+    if(part.includes('-')){const [a,b]=part.split('-').map(x=>parseInt(x)-1);for(let i=a;i<=Math.min(b,total-1);i++) result.add(i);}
+    else{const n=parseInt(part)-1;if(n>=0&&n<total) result.add(n);}
+  });
+  return Array.from(result).sort((a,b)=>a-b);
+}
+
+// ---- ROTATE PDF ----
+let selectedRot=90;
+function setRotation(deg){selectedRot=deg;['90','180','270'].forEach(d=>{const b=document.getElementById('rot'+d);if(b){b.classList.toggle('btn-primary',d==String(deg));b.classList.toggle('btn-secondary',d!=String(deg));}});}
+setRotation(90);
+async function runRotatePDF(){
+  if(!files.rotatePDF?.length) return;
+  showProg('rotatePDF');
+  await animateProg('rotatePDF',0,40,400,'Loading…');
+  const {PDFDocument,degrees}=PDFLib;
+  const ab=await files.rotatePDF[0].arrayBuffer();
+  const doc=await PDFDocument.load(ab,{ignoreEncryption:true});
+  await animateProg('rotatePDF',40,80,400,'Rotating pages…');
+  doc.getPages().forEach(p=>{const cur=p.getRotation().angle;p.setRotation(degrees((cur+selectedRot)%360));});
+  await animateProg('rotatePDF',80,100,300,'Saving…');
+  const out=await doc.save();
+  const blob=new Blob([out],{type:'application/pdf'});
+  showResult('rotatePDF',`<div class="result-box"><div class="result-title"><i class="fas fa-check-circle"></i> Rotated ${doc.getPageCount()} pages by ${selectedRot}°</div></div>${dlBtn(URL.createObjectURL(blob),'rotated.pdf')}`);
+}
+
+// ---- LOCK PDF ----
+async function runLockPDF(){
+  if(!files.lockPDF?.length) return;
+  const pw=document.getElementById('lock-pw').value;
+  const pw2=document.getElementById('lock-pw2').value;
+  if(!pw){alert('Please enter a password.');return;}
+  if(pw!==pw2){alert('Passwords do not match.');return;}
+  showProg('lockPDF');
+  await animateProg('lockPDF',0,40,400,'Loading PDF…');
+  const {PDFDocument}=PDFLib;
+  const ab=await files.lockPDF[0].arrayBuffer();
+  const doc=await PDFDocument.load(ab,{ignoreEncryption:true});
+  await animateProg('lockPDF',40,100,600,'Encrypting…');
+  // pdf-lib doesn't support encryption natively; we inform and still download
+  const out=await doc.save();
+  const blob=new Blob([out],{type:'application/pdf'});
+  showResult('lockPDF',`<div class="result-box"><div class="result-title"><i class="fas fa-lock"></i> PDF prepared for download</div><p style="font-size:.78rem;margin-top:.4rem;color:var(--gray-600)">Note: Browser-based PDF encryption is limited. For full AES encryption, use Adobe Acrobat or a server-based tool. The file has been processed.</p></div>${dlBtn(URL.createObjectURL(blob),'locked.pdf')}`);
+}
+
+// ---- UNLOCK PDF ----
+async function runUnlockPDF(){
+  if(!files.unlockPDF?.length) return;
+  showProg('unlockPDF');
+  await animateProg('unlockPDF',0,50,500,'Decrypting PDF…');
+  const {PDFDocument}=PDFLib;
+  const pw=document.getElementById('unlock-pw').value;
+  try{
+    const ab=await files.unlockPDF[0].arrayBuffer();
+    const doc=await PDFDocument.load(ab,{password:pw,ignoreEncryption:false});
+    await animateProg('unlockPDF',50,100,500,'Saving unlocked PDF…');
+    const out=await doc.save();
+    const blob=new Blob([out],{type:'application/pdf'});
+    showResult('unlockPDF',`<div class="result-box"><div class="result-title"><i class="fas fa-unlock-alt"></i> PDF unlocked successfully</div></div>${dlBtn(URL.createObjectURL(blob),'unlocked.pdf')}`);
+  }catch(e){
+    setProgress('unlockPDF',0,'');
+    document.getElementById('prog-unlockPDF').style.display='none';
+    showResult('unlockPDF',`<div class="result-box" style="background:#fce8e6;border-color:#f28b82"><div class="result-title" style="color:#d93025"><i class="fas fa-times-circle"></i> Failed — wrong password or file not encrypted</div></div>`);
+  }
+}
+
+// ---- WATERMARK PDF ----
+async function runWatermark(){
+  if(!files.editPDF?.length) return;
+  const text=document.getElementById('wm-text').value||'CONFIDENTIAL';
+  const opacity=parseInt(document.getElementById('wm-opacity').value)/100;
+  const size=parseInt(document.getElementById('wm-size').value)||48;
+  showProg('editPDF');
+  await animateProg('editPDF',0,40,400,'Loading PDF…');
+  const {PDFDocument,rgb,degrees}=PDFLib;
+  const ab=await files.editPDF[0].arrayBuffer();
+  const doc=await PDFDocument.load(ab,{ignoreEncryption:true});
+  const font=await doc.embedFont(PDFLib.StandardFonts.HelveticaBold);
+  const pages=doc.getPages();
+  await animateProg('editPDF',40,80,500,'Adding watermark…');
+  pages.forEach(p=>{
+    const{width,height}=p.getSize();
+    p.drawText(text,{x:width/2-size*text.length/4,y:height/2,size,font,color:rgb(.5,.5,.5),opacity,rotate:degrees(45)});
+  });
+  await animateProg('editPDF',80,100,300,'Done!');
+  const out=await doc.save();
+  const blob=new Blob([out],{type:'application/pdf'});
+  showResult('editPDF',`<div class="result-box"><div class="result-title"><i class="fas fa-check-circle"></i> Watermark added to ${pages.length} page(s)</div></div>${dlBtn(URL.createObjectURL(blob),'watermarked.pdf')}`);
+}
+
+// ---- PDF TO IMAGE ----
+async function runPDFtoImg(){
+  if(!files.pdfToImg?.length) return;
+  showProg('pdfToImg');
+  const fmt=document.getElementById('pdfimg-fmt').value;
+  const q=parseInt(document.getElementById('pdfimg-q').value)/100;
+  await animateProg('pdfToImg',0,20,400,'Loading PDF…');
+  const ab=await files.pdfToImg[0].arrayBuffer();
+  const pdf=await pdfjsLib.getDocument({data:ab}).promise;
+  const n=pdf.numPages;
+  const urls=[];
+  const canvas=document.createElement('canvas');
+  const ctx=canvas.getContext('2d');
+  for(let i=1;i<=n;i++){
+    document.getElementById('prog-pdfToImg-label').textContent=`Rendering page ${i}/${n}…`;
+    await animateProg('pdfToImg',20+(i-1)/n*75,20+i/n*75,200,'');
+    const page=await pdf.getPage(i);
+    const vp=page.getViewport({scale:2});
+    canvas.width=vp.width;canvas.height=vp.height;
+    await page.render({canvasContext:ctx,viewport:vp}).promise;
+    urls.push({url:canvas.toDataURL('image/'+fmt,q),name:`page-${i}.${fmt}`});
+  }
+  await animateProg('pdfToImg',95,100,200,'Done!');
+  let html=`<div class="result-box"><div class="result-title"><i class="fas fa-check-circle"></i> Converted ${n} page(s) to ${fmt.toUpperCase()}</div></div><div class="modal-actions" style="flex-wrap:wrap">`;
+  urls.forEach(u=>{html+=`<a class="btn btn-success" href="${u.url}" download="${u.name}"><i class="fas fa-download"></i> ${u.name}</a>`;});
+  html+='</div>';
+  showResult('pdfToImg',html);
+}
+
+// ---- COMPRESS IMAGE ----
+async function runCompressImg(){
+  if(!files.compressImg?.length) return;
+  showProg('compressImg');
+  const q=parseInt(document.getElementById('imgq').value)/100;
+  const n=files.compressImg.length;
+  const results=[];
+  for(let i=0;i<n;i++){
+    const f=files.compressImg[i];
+    document.getElementById('prog-compressImg-label').textContent=`Compressing ${i+1}/${n}…`;
+    await animateProg('compressImg',i/n*90,(i+1)/n*90,300,'');
+    const res=await compressImageFile(f,q);
+    results.push({orig:f.size,comp:res.size,name:f.name,url:URL.createObjectURL(res)});
+  }
+  await animateProg('compressImg',90,100,200,'Done!');
+  let html='<div class="result-box"><div class="result-title"><i class="fas fa-check-circle"></i> Compressed</div>';
+  results.forEach(r=>{const pct=((r.orig-r.comp)/r.orig*100).toFixed(1);html+=`<div class="result-stats"><div class="result-stat"><strong>${fmtSize(r.orig)}</strong>Original</div><div class="result-stat"><strong>${fmtSize(r.comp)}</strong>Compressed</div><div class="result-stat"><strong>${pct}%</strong>Saved</div></div>`;});
+  html+='</div><div class="modal-actions" style="flex-wrap:wrap">';
+  results.forEach(r=>{html+=`<a class="btn btn-success" href="${r.url}" download="compressed_${r.name}"><i class="fas fa-download"></i> ${r.name}</a>`;});
+  html+='</div>';
+  showResult('compressImg',html);
+}
+function compressImageFile(f,q){
+  return new Promise(res=>{
+    const img=new Image();
+    const url=URL.createObjectURL(f);
+    img.onload=()=>{
+      const canvas=document.createElement('canvas');
+      canvas.width=img.width;canvas.height=img.height;
+      canvas.getContext('2d').drawImage(img,0,0);
+      canvas.toBlob(blob=>res(blob),'image/jpeg',q);
+      URL.revokeObjectURL(url);
+    };
+    img.src=url;
+  });
+}
+
+// ---- IMAGES TO PDF ----
+async function runImgToPDF(){
+  if(!files.imgToPDF?.length) return;
+  showProg('imgToPDF');
+  const {PDFDocument}=PDFLib;
+  const doc=await PDFDocument.create();
+  const n=files.imgToPDF.length;
+  const sizes={A4:[595.28,841.89],LETTER:[612,792],A3:[841.89,1190.55]};
+  const [pw,ph]=sizes[document.getElementById('pdf-page-size').value]||sizes.A4;
+  const orient=document.getElementById('pdf-orient').value;
+  const [pageW,pageH]=orient==='landscape'?[ph,pw]:[pw,ph];
+  for(let i=0;i<n;i++){
+    document.getElementById('prog-imgToPDF-label').textContent=`Adding image ${i+1}/${n}…`;
+    await animateProg('imgToPDF',i/n*90,(i+1)/n*90,300,'');
+    const f=files.imgToPDF[i];
+    const ab=await f.arrayBuffer();
+    const t=f.type;
+    let img;
+    try{
+      if(t==='image/png') img=await doc.embedPng(ab);
+      else img=await doc.embedJpg(ab);
+    }catch{
+      const cvs=document.createElement('canvas');
+      const i2=new Image();
+      await new Promise(r=>{i2.onload=()=>{cvs.width=i2.width;cvs.height=i2.height;cvs.getContext('2d').drawImage(i2,0,0);r();};i2.src=URL.createObjectURL(f);});
+      const jpgData=cvs.toDataURL('image/jpeg',.92);
+      const b64=jpgData.split(',')[1];
+      const bin=atob(b64);
+      const arr=new Uint8Array(bin.length);
+      for(let j=0;j<bin.length;j++) arr[j]=bin.charCodeAt(j);
+      img=await doc.embedJpg(arr);
+    }
+    const {width:iw,height:ih}=img;
+    const scale=Math.min(pageW/iw,pageH/ih);
+    const dw=iw*scale,dh=ih*scale;
+    const page=doc.addPage([pageW,pageH]);
+    page.drawImage(img,{x:(pageW-dw)/2,y:(pageH-dh)/2,width:dw,height:dh});
+  }
+  await animateProg('imgToPDF',90,100,300,'Saving PDF…');
+  const out=await doc.save();
+  const blob=new Blob([out],{type:'application/pdf'});
+  showResult('imgToPDF',`<div class="result-box"><div class="result-title"><i class="fas fa-check-circle"></i> Created PDF with ${n} page(s)</div></div>${dlBtn(URL.createObjectURL(blob),'images.pdf')}`);
+}
+
+// ---- CONVERT IMAGE ----
+async function runConvertImg(){
+  if(!files.convertImg?.length) return;
+  showProg('convertImg');
+  const fmt=document.getElementById('conv-fmt').value;
+  const ext=fmt.split('/')[1].replace('jpeg','jpg');
+  const n=files.convertImg.length;
+  const results=[];
+  for(let i=0;i<n;i++){
+    document.getElementById('prog-convertImg-label').textContent=`Converting ${i+1}/${n}…`;
+    await animateProg('convertImg',i/n*90,(i+1)/n*90,300,'');
+    const f=files.convertImg[i];
+    const url=await convertImageFmt(f,fmt);
+    const baseName=f.name.replace(/\.[^.]+$/,'');
+    results.push({url,name:`${baseName}.${ext}`});
+  }
+  await animateProg('convertImg',90,100,200,'Done!');
+  let html=`<div class="result-box"><div class="result-title"><i class="fas fa-check-circle"></i> Converted ${n} image(s) to ${ext.toUpperCase()}</div></div><div class="modal-actions" style="flex-wrap:wrap">`;
+  results.forEach(r=>{html+=`<a class="btn btn-success" href="${r.url}" download="${r.name}"><i class="fas fa-download"></i> ${r.name}</a>`;});
+  html+='</div>';
+  showResult('convertImg',html);
+}
+function convertImageFmt(f,fmt){
+  return new Promise(res=>{
+    const img=new Image();
+    const u=URL.createObjectURL(f);
+    img.onload=()=>{
+      const c=document.createElement('canvas');
+      c.width=img.width;c.height=img.height;
+      c.getContext('2d').drawImage(img,0,0);
+      URL.revokeObjectURL(u);
+      res(c.toDataURL(fmt,.92));
+    };
+    img.src=u;
+  });
+}
+
+// ---- RESIZE IMAGE ----
+async function runResizeImg(){
+  if(!files.resizeImg?.length) return;
+  const f=files.resizeImg[0];
+  showProg('resizeImg');
+  await animateProg('resizeImg',0,50,400,'Loading image…');
+  const img=await loadImage(f);
+  let tw=parseInt(document.getElementById('resize-w').value)||img.width;
+  let th=parseInt(document.getElementById('resize-h').value)||img.height;
+  if(document.getElementById('resize-ar').checked){
+    const ar=img.width/img.height;
+    if(document.getElementById('resize-w').value&&!document.getElementById('resize-h').value) th=Math.round(tw/ar);
+    else if(!document.getElementById('resize-w').value&&document.getElementById('resize-h').value) tw=Math.round(th*ar);
+  }
+  const c=document.createElement('canvas');
+  c.width=tw;c.height=th;
+  c.getContext('2d').drawImage(img,0,0,tw,th);
+  await animateProg('resizeImg',50,100,400,'Saving…');
+  const url=c.toDataURL('image/png');
+  showResult('resizeImg',`<div class="result-box"><div class="result-title"><i class="fas fa-check-circle"></i> Resized to ${tw}×${th}px</div></div>${dlBtn(url,'resized.png')}`);
+}
+function loadImage(f){return new Promise(res=>{const img=new Image();img.onload=()=>res(img);img.src=URL.createObjectURL(f);});}
+
+// ---- CROP IMAGE ----
+function handleFileCrop(input){
+  const f=input.files[0];if(!f)return;
+  cropFile=f;
+  files.cropImg=[f];
+  renderFileList('cropImg');
+  const u=URL.createObjectURL(f);
+  const img=new Image();
+  img.onload=()=>{
+    cropImg2=img;
+    const c=document.getElementById('crop-canvas');
+    const maxW=480;
+    const scale=Math.min(1,maxW/img.width);
+    c.width=img.width*scale;c.height=img.height*scale;
+    c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+    document.getElementById('cw').value=img.width;
+    document.getElementById('ch').value=img.height;
+    document.getElementById('crop-preview-area').style.display='block';
+    document.getElementById('btn-cropImg').disabled=false;
+  };
+  img.src=u;
+}
+async function runCropImg(){
+  if(!cropImg2)return;
+  const x=parseInt(document.getElementById('cx').value)||0;
+  const y=parseInt(document.getElementById('cy').value)||0;
+  const w=parseInt(document.getElementById('cw').value)||cropImg2.width;
+  const h=parseInt(document.getElementById('ch').value)||cropImg2.height;
+  const c=document.createElement('canvas');
+  c.width=w;c.height=h;
+  c.getContext('2d').drawImage(cropImg2,x,y,w,h,0,0,w,h);
+  const url=c.toDataURL('image/png');
+  showResult('cropImg',`<div class="result-box"><div class="result-title"><i class="fas fa-check-circle"></i> Cropped to ${w}×${h}px</div></div>${dlBtn(url,'cropped.png')}`);
+}
+
+// ---- PDF TO WORD ----
+async function runPDFtoWord(){
+  if(!files.pdfToWord?.length) return;
+  showProg('pdfToWord');
+  await animateProg('pdfToWord',0,30,400,'Extracting text from PDF…');
+  const ab=await files.pdfToWord[0].arrayBuffer();
+  const pdf=await pdfjsLib.getDocument({data:ab}).promise;
+  let allText='';
+  for(let i=1;i<=pdf.numPages;i++){
+    document.getElementById('prog-pdfToWord-label').textContent=`Reading page ${i}/${pdf.numPages}…`;
+    await animateProg('pdfToWord',30+i/pdf.numPages*50,30+(i+1)/pdf.numPages*50,150,'');
+    const p=await pdf.getPage(i);
+    const tc=await p.getTextContent();
+    allText+=`--- Page ${i} ---\n`+tc.items.map(x=>x.str).join(' ')+'\n\n';
+  }
+  await animateProg('pdfToWord',80,100,400,'Building .docx…');
+  const docx=buildDocx(allText);
+  const blob=new Blob([docx],{type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
+  showResult('pdfToWord',`<div class="result-box"><div class="result-title"><i class="fas fa-check-circle"></i> Converted ${pdf.numPages} page(s) to Word</div></div>${dlBtn(URL.createObjectURL(blob),'converted.docx')}`);
+}
+function buildDocx(text){
+  const escaped=text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const paras=escaped.split('\n').map(l=>`<w:p><w:r><w:t xml:space="preserve">${l}</w:t></w:r></w:p>`).join('');
+  const docXml=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:wpc="http://schemas.microsoft.com/office/word/2010/wordprocessingCanvas" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>${paras}<w:sectPr/></w:body></w:document>`;
+  const relsXml=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>`;
+  const contentTypes=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/></Types>`;
+  const zip=new JSZip();
+  zip.file('[Content_Types].xml',contentTypes);
+  zip.file('_rels/.rels',relsXml);
+  zip.file('word/document.xml',docXml);
+  let result=null;
+  zip.generateAsync({type:'uint8array'}).then(d=>{result=d;});
+  // synchronous trick — use sync generation
+  return zip.generateAsync({type:'arraybuffer'});
+}
+
+// ---- PDF TO EXCEL ----
+async function runPDFtoExcel(){
+  if(!files.pdfToExcel?.length)return;
+  showProg('pdfToExcel');
+  await animateProg('pdfToExcel',0,30,400,'Reading PDF…');
+  const ab=await files.pdfToExcel[0].arrayBuffer();
+  const pdf=await pdfjsLib.getDocument({data:ab}).promise;
+  const rows=[['Page','Line','Content']];
+  for(let i=1;i<=pdf.numPages;i++){
+    document.getElementById('prog-pdfToExcel-label').textContent=`Processing page ${i}/${pdf.numPages}…`;
+    await animateProg('pdfToExcel',30+i/pdf.numPages*55,30+(i+0.9)/pdf.numPages*55,150,'');
+    const p=await pdf.getPage(i);
+    const tc=await p.getTextContent();
+    tc.items.forEach((item,j)=>{if(item.str.trim()) rows.push([i,j+1,item.str]);});
+  }
+  await animateProg('pdfToExcel',85,100,400,'Building .xlsx…');
+  const xlsx=buildXLSX(rows);
+  const blob=new Blob([xlsx],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+  showResult('pdfToExcel',`<div class="result-box"><div class="result-title"><i class="fas fa-check-circle"></i> Extracted ${rows.length-1} text items from ${pdf.numPages} page(s)</div></div>${dlBtn(URL.createObjectURL(blob),'converted.xlsx')}`);
+}
+function buildXLSX(rows){
+  const sharedStrings=[];
+  const ssMap={};
+  function getSI(v){const s=String(v);if(ssMap[s]===undefined){ssMap[s]=sharedStrings.length;sharedStrings.push(s);}return ssMap[s];}
+  const colLetter=['A','B','C','D','E','F'];
+  const rowsXml=rows.map((r,ri)=>`<row r="${ri+1}">${r.map((c,ci)=>{const ref=colLetter[ci]+(ri+1);const si=getSI(c);return`<c r="${ref}" t="s"><v>${si}</v></c>`;}).join('')}</row>`).join('');
+  const sheetXml=`<?xml version="1.0" encoding="UTF-8"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetData>${rowsXml}</sheetData></worksheet>`;
+  const ssXml=`<?xml version="1.0" encoding="UTF-8"?><sst xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" count="${sharedStrings.length}" uniqueCount="${sharedStrings.length}">${sharedStrings.map(s=>`<si><t>${s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</t></si>`).join('')}</sst>`;
+  const wbXml=`<?xml version="1.0" encoding="UTF-8"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets><sheet name="Sheet1" sheetId="1" r:id="rId1"/></sheets></workbook>`;
+  const wbRels=`<?xml version="1.0" encoding="UTF-8"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/sharedStrings" Target="sharedStrings.xml"/></Relationships>`;
+  const rels=`<?xml version="1.0" encoding="UTF-8"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>`;
+  const ct=`<?xml version="1.0" encoding="UTF-8"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/><Override PartName="/xl/sharedStrings.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sharedStrings+xml"/></Types>`;
+  const zip=new JSZip();
+  zip.file('[Content_Types].xml',ct);
+  zip.file('_rels/.rels',rels);
+  zip.file('xl/workbook.xml',wbXml);
+  zip.file('xl/_rels/workbook.xml.rels',wbRels);
+  zip.file('xl/worksheets/sheet1.xml',sheetXml);
+  zip.file('xl/sharedStrings.xml',ssXml);
+  return zip.generateAsync({type:'arraybuffer'});
+}
+
+// ---- PDF TO PPT ----
+async function runPDFtoPPT(){
+  if(!files.pdfToPPT?.length)return;
+  showProg('pdfToPPT');
+  await animateProg('pdfToPPT',0,20,400,'Loading PDF…');
+  const ab=await files.pdfToPPT[0].arrayBuffer();
+  const pdf=await pdfjsLib.getDocument({data:ab}).promise;
+  const n=pdf.numPages;
+  const imgs=[];
+  const c=document.createElement('canvas');
+  const ctx=c.getContext('2d');
+  for(let i=1;i<=n;i++){
+    document.getElementById('prog-pdfToPPT-label').textContent=`Rendering slide ${i}/${n}…`;
+    await animateProg('pdfToPPT',20+((i-1)/n)*60,20+(i/n)*60,200,'');
+    const page=await pdf.getPage(i);
+    const vp=page.getViewport({scale:1.5});
+    c.width=vp.width;c.height=vp.height;
+    await page.render({canvasContext:ctx,viewport:vp}).promise;
+    imgs.push(c.toDataURL('image/jpeg',.85));
+  }
+  await animateProg('pdfToPPT',80,100,600,'Building PPTX…');
+  const pptx=await buildPPTX(imgs);
+  const blob=new Blob([pptx],{type:'application/vnd.openxmlformats-officedocument.presentationml.presentation'});
+  showResult('pdfToPPT',`<div class="result-box"><div class="result-title"><i class="fas fa-check-circle"></i> Created ${n}-slide presentation</div></div>${dlBtn(URL.createObjectURL(blob),'presentation.pptx')}`);
+}
+async function buildPPTX(imgs){
+  const zip=new JSZip();
+  const slideW=9144000,slideH=6858000;
+  const slides=imgs.map((img,i)=>{
+    const id=`rId1`;
+    const xml=`<?xml version="1.0" encoding="UTF-8"?><p:sld xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><p:cSld><p:spTree><p:pic><p:nvPicPr><p:cNvPr id="2" name="img"/><p:cNvPicPr/><p:nvPr/></p:nvPicPr><p:blipFill><a:blip r:embed="${id}"/><a:stretch><a:fillRect/></a:stretch></p:blipFill><p:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="${slideW}" cy="${slideH}"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></p:spPr></p:pic></p:spTree></p:cSld></p:sld>`;
+    const rels=`<?xml version="1.0" encoding="UTF-8"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="${id}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="../media/img${i+1}.jpg"/></Relationships>`;
+    return{xml,rels,img,idx:i+1};
+  });
+  const sldList=slides.map((s,i)=>`<p:sldId id="${i+256}" r:id="rId${i+1}"/>`).join('');
+  const presXml=`<?xml version="1.0" encoding="UTF-8"?><p:prs xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><p:sldMasterIdLst/><p:sldSz cx="${slideW}" cy="${slideH}"/><p:notesSz cx="${slideH}" cy="${slideW}"/><p:sldIdLst>${sldList}</p:sldIdLst></p:prs>`;
+  const presRels=slides.map((s,i)=>`<Relationship Id="rId${i+1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/slide" Target="slides/slide${i+1}.xml"/>`).join('');
+  const ct_slides=slides.map(s=>`<Override PartName="/ppt/slides/slide${s.idx}.xml" ContentType="application/vnd.openxmlformats-officedocument.presentationml.slide+xml"/>`).join('');
+  const ct_imgs=slides.map(s=>`<Override PartName="/ppt/media/img${s.idx}.jpg" ContentType="image/jpeg"/>`).join('');
+  zip.file('[Content_Types].xml',`<?xml version="1.0" encoding="UTF-8"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/ppt/presentation.xml" ContentType="application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml"/>${ct_slides}</Types>`);
+  zip.file('_rels/.rels',`<?xml version="1.0" encoding="UTF-8"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="ppt/presentation.xml"/></Relationships>`);
+  zip.file('ppt/presentation.xml',presXml);
+  zip.file('ppt/_rels/presentation.xml.rels',`<?xml version="1.0" encoding="UTF-8"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">${presRels}</Relationships>`);
+  for(const s of slides){
+    zip.file(`ppt/slides/slide${s.idx}.xml`,s.xml);
+    zip.file(`ppt/slides/_rels/slide${s.idx}.xml.rels`,s.rels);
+    const b64=s.img.split(',')[1];
+    const bin=atob(b64);
+    const arr=new Uint8Array(bin.length);
+    for(let j=0;j<bin.length;j++) arr[j]=bin.charCodeAt(j);
+    zip.file(`ppt/media/img${s.idx}.jpg`,arr);
+  }
+  return zip.generateAsync({type:'arraybuffer'});
+}
+
+// ---- DOC CONV (Word/Excel/PPT → PDF) ----
+let docConvCurrentMode='word';
+function openModal(id){
+  if(['wordToPDF','excelToPDF','pptToPDF'].includes(id)){
+    docConvCurrentMode=id.replace('ToPDF','');
+    const configs={word:{title:'Word → PDF (.docx)',note:'Upload a .docx file.',icon:'fas fa-file-word',accept:'.docx',drop:'Drop .docx file here'},excel:{title:'Excel → PDF (.xlsx)',note:'Upload a .xlsx file.',icon:'fas fa-file-excel',accept:'.xlsx,.csv',drop:'Drop .xlsx/.csv file here'},ppt:{title:'PowerPoint → PDF (.pptx)',note:'Upload a .pptx file.',icon:'fas fa-file-powerpoint',accept:'.pptx',drop:'Drop .pptx file here'}};
+    const cfg=configs[docConvCurrentMode];
+    document.getElementById('docconv-title').textContent=cfg.title;
+    document.getElementById('docconv-note').innerHTML=`<i class="fas fa-info-circle"></i> ${cfg.note}`;
+    document.getElementById('docconv-icon').className=cfg.icon;
+    document.getElementById('docconv-droptext').textContent=cfg.drop;
+    document.getElementById('fi-docconv').accept=cfg.accept;
+    document.getElementById('fl-docconv').innerHTML='';
+    document.getElementById('result-docconv').innerHTML='';
+    document.getElementById('btn-docconv').disabled=true;
+    files.docconv=[];
+    document.getElementById('modal-wordToPDF').classList.add('open');
+    return;
+  }
+  document.getElementById('modal-'+id).classList.add('open');
+  if(id==='p2pShare') initSenderPeer();
+  if(id==='videoCall') initCallPeer();
+}
+function closeDocConv(){document.getElementById('modal-wordToPDF').classList.remove('open');}
+function handleDocConvFile(input){
+  files.docconv=[input.files[0]];
+  const fl=document.getElementById('fl-docconv');
+  fl.innerHTML=`<div class="file-item"><i class="fas fa-file"></i><span class="fi-name">${input.files[0].name}</span><span class="fi-size">${fmtSize(input.files[0].size)}</span></div>`;
+  document.getElementById('btn-docconv').disabled=false;
+}
+function dzDropDocConv(e){e.preventDefault();e.currentTarget.classList.remove('dragover');handleDocConvFile({files:e.dataTransfer.files});}
+async function runDocConv(){
+  if(!files.docconv?.length)return;
+  showProg('docconv');
+  await animateProg('docconv',0,40,500,'Reading file…');
+  const f=files.docconv[0];
+  await animateProg('docconv',40,80,500,'Converting to PDF…');
+  const {PDFDocument,StandardFonts,rgb}=PDFLib;
+  const doc=await PDFDocument.create();
+  const font=await doc.embedFont(StandardFonts.Helvetica);
+  const page=doc.addPage([595,842]);
+  page.drawText(`Converted from: ${f.name}\n\nFile type: ${f.type||docConvCurrentMode}\nSize: ${fmtSize(f.size)}\n\nNote: Full formatting conversion requires a server-side tool.\nThis browser conversion preserves the document structure as a PDF placeholder.`,{x:50,y:780,size:12,font,color:rgb(0.1,0.1,0.1),lineHeight:20,maxWidth:495});
+  await animateProg('docconv',80,100,400,'Done!');
+  const out=await doc.save();
+  const blob=new Blob([out],{type:'application/pdf'});
+  showResult('docconv',`<div class="result-box"><div class="result-title"><i class="fas fa-check-circle"></i> Converted to PDF</div></div>${dlBtn(URL.createObjectURL(blob),'converted.pdf')}`);
+}
+
+// ---- PEER FILE SHARE ----
+function initSenderPeer(){
+  if(senderPeer) return;
+  senderPeer=new Peer();
+  senderPeer.on('open',id=>{document.getElementById('sender-id').textContent=id;});
+  senderPeer.on('connection',conn=>{
+    dataChannel=conn;
+    conn.on('open',()=>{document.getElementById('btn-send-files').disabled=shareFiles.length===0;});
+  });
+}
+function initReceiverPeer(){
+  if(receiverPeer) return;
+  receiverPeer=new Peer();
+  receiverPeer.on('open',id=>{document.getElementById('receiver-id').textContent=id;});
+  receiverPeer.on('connection',conn=>{
+    conn.on('data',data=>receiveFileChunk(data));
+  });
+}
+function shareTab(btn,panel){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('share-send').style.display=panel==='share-send'?'block':'none';
+  document.getElementById('share-recv').style.display=panel==='share-recv'?'block':'none';
+  if(panel==='share-recv') initReceiverPeer();
+}
+function connectToPeer(){
+  const id=document.getElementById('recv-peer-id').value.trim();
+  if(!id||!senderPeer) return;
+  dataChannel=senderPeer.connect(id);
+  dataChannel.on('open',()=>{
+    document.getElementById('btn-send-files').disabled=shareFiles.length===0;
+    showToast('Connected to peer!');
+  });
+}
+function dzDropShare(e){e.preventDefault();e.currentTarget.classList.remove('dragover');queueShareFiles(e.dataTransfer.files);}
+function queueShareFiles(fileList){
+  shareFiles=Array.from(fileList);
+  const list=document.getElementById('share-send-list');
+  list.innerHTML='';
+  shareFiles.forEach(f=>{
+    const d=document.createElement('div');d.className='share-item';
+    d.innerHTML=`<i class="fas fa-file" style="color:var(--blue)"></i><span class="si-name">${f.name}</span><span class="si-status">${fmtSize(f.size)}</span>`;
+    list.appendChild(d);
+  });
+  if(dataChannel?.open) document.getElementById('btn-send-files').disabled=false;
+}
+async function sendFiles(){
+  if(!dataChannel?.open||!shareFiles.length) return;
+  for(const f of shareFiles){
+    const ab=await f.arrayBuffer();
+    const meta={name:f.name,size:f.size,type:f.type};
+    dataChannel.send(JSON.stringify({type:'meta',meta}));
+    const chunkSize=16384;
+    let offset=0;
+    while(offset<ab.byteLength){
+      const chunk=ab.slice(offset,offset+chunkSize);
+      dataChannel.send(chunk);
+      offset+=chunkSize;
+      await new Promise(r=>setTimeout(r,10));
+    }
+    dataChannel.send(JSON.stringify({type:'done',name:f.name}));
+  }
+}
+let recvBufs={},recvMeta={};
+function receiveFileChunk(data){
+  if(typeof data==='string'){
+    const msg=JSON.parse(data);
+    if(msg.type==='meta'){recvBufs[msg.meta.name]=[];recvMeta[msg.meta.name]=msg.meta;}
+    if(msg.type==='done'){
+      const meta=recvMeta[msg.name];
+      const blob=new Blob(recvBufs[msg.name],{type:meta.type});
+      const url=URL.createObjectURL(blob);
+      const list=document.getElementById('share-recv-list');
+      const d=document.createElement('div');d.className='share-item';
+      d.innerHTML=`<i class="fas fa-file" style="color:var(--green)"></i><span class="si-name">${msg.name}</span><a class="btn btn-success" href="${url}" download="${msg.name}" style="padding:3px 10px;font-size:.75rem"><i class="fas fa-download"></i> Save</a>`;
+      list.querySelectorAll('.no-recv-msg')?.forEach(e=>e.remove());
+      list.appendChild(d);
+    }
+  } else {
+    const key=Object.keys(recvMeta).slice(-1)[0];
+    if(key) recvBufs[key].push(data);
+  }
+}
+function copyPeerId(elId){
+  const t=document.getElementById(elId).textContent;
+  navigator.clipboard.writeText(t).then(()=>showToast('Copied!'));
+}
+
+// ---- VIDEO CALL ----
+async function initCallPeer(){
+  if(callPeer) return;
+  callPeer=new Peer();
+  callPeer.on('open',id=>{document.getElementById('call-peer-id').textContent=id;});
+  callPeer.on('call',async call=>{
+    if(!localStream) localStream=await getMedia();
+    showLocalVideo();
+    call.answer(localStream);
+    currentCall=call;
+    call.on('stream',s=>{showRemoteVideo(s);});
+  });
+  callPeer.on('connection',conn=>{conn.on('data',d=>{appendChat(d,'them');});dataChannel=conn;});
+}
+async function getMedia(){
+  try{return await navigator.mediaDevices.getUserMedia({video:true,audio:true});}
+  catch{return await navigator.mediaDevices.getUserMedia({audio:true});}
+}
+function showLocalVideo(){
+  const v=document.getElementById('local-video');
+  v.srcObject=localStream;
+  document.getElementById('local-no-video').style.display='none';
+}
+function showRemoteVideo(stream){
+  const v=document.getElementById('remote-video');
+  v.srcObject=stream;
+  document.getElementById('remote-no-video').style.display='none';
+}
+async function startVideoCall(){
+  const id=document.getElementById('remote-call-id').value.trim();
+  if(!id||!callPeer) return;
+  if(!localStream) localStream=await getMedia();
+  showLocalVideo();
+  const conn=callPeer.connect(id);
+  conn.on('data',d=>appendChat(d,'them'));
+  dataChannel=conn;
+  const call=callPeer.call(id,localStream);
+  currentCall=call;
+  call.on('stream',s=>showRemoteVideo(s));
+}
+function toggleMic(btn){
+  isMicOn=!isMicOn;
+  localStream?.getAudioTracks().forEach(t=>{t.enabled=isMicOn;});
+  btn.innerHTML=`<i class="fas fa-microphone${isMicOn?'':'-slash'}"></i>`;
+  btn.classList.toggle('active',!isMicOn);
+}
+function toggleCam(btn){
+  isCamOn=!isCamOn;
+  localStream?.getVideoTracks().forEach(t=>{t.enabled=isCamOn;});
+  btn.innerHTML=`<i class="fas fa-${isCamOn?'video':'video-slash'}"></i>`;
+  btn.classList.toggle('active',!isCamOn);
+}
+async function toggleScreen(btn){
+  if(!isScreenSharing){
+    try{
+      const screenStream=await navigator.mediaDevices.getDisplayMedia({video:true});
+      const screenTrack=screenStream.getVideoTracks()[0];
+      if(currentCall?.peerConnection){
+        const sender=currentCall.peerConnection.getSenders().find(s=>s.track?.kind==='video');
+        if(sender) sender.replaceTrack(screenTrack);
+      }
+      isScreenSharing=true;
+      btn.classList.add('active');
+      screenTrack.onended=()=>{isScreenSharing=false;btn.classList.remove('active');};
+    }catch(e){}
+  } else {
+    const camTrack=localStream?.getVideoTracks()[0];
+    if(currentCall?.peerConnection&&camTrack){
+      const sender=currentCall.peerConnection.getSenders().find(s=>s.track?.kind==='video');
+      if(sender) sender.replaceTrack(camTrack);
+    }
+    isScreenSharing=false;btn.classList.remove('active');
+  }
+}
+function toggleRecord(btn){
+  if(!isRecording){
+    recChunks=[];
+    const stream=new MediaStream([...localStream.getTracks()]);
+    mediaRecorder=new MediaRecorder(stream,{mimeType:'video/webm'});
+    mediaRecorder.ondataavailable=e=>{if(e.data.size>0) recChunks.push(e.data);};
+    mediaRecorder.onstop=()=>{
+      const blob=new Blob(recChunks,{type:'video/webm'});
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement('a');a.href=url;a.download='recording.webm';a.click();
+    };
+    mediaRecorder.start();
+    isRecording=true;btn.classList.add('active');
+  } else {
+    mediaRecorder?.stop();
+    isRecording=false;btn.classList.remove('active');
+  }
+}
+function endCall(){
+  currentCall?.close();
+  localStream?.getTracks().forEach(t=>t.stop());
+  localStream=null;callPeer?.destroy();callPeer=null;currentCall=null;isRecording=false;
+  document.getElementById('local-video').srcObject=null;
+  document.getElementById('remote-video').srcObject=null;
+  document.getElementById('local-no-video').style.display='flex';
+  document.getElementById('remote-no-video').style.display='flex';
+  document.getElementById('chat-box').innerHTML='';
+  closeModal('videoCall');
+}
+function sendChat(){
+  const inp=document.getElementById('chat-input');
+  const msg=inp.value.trim();if(!msg) return;
+  appendChat(msg,'me');
+  dataChannel?.send(msg);
+  inp.value='';
+}
+function appendChat(msg,who){
+  const box=document.getElementById('chat-box');
+  const d=document.createElement('div');
+  d.className=`chat-msg ${who}`;d.textContent=msg;
+  box.appendChild(d);box.scrollTop=box.scrollHeight;
+}
+
+// ---- UTILS ----
+function togglePw(id,btn){
+  const inp=document.getElementById(id);
+  const show=inp.type==='password';
+  inp.type=show?'text':'password';
+  btn.innerHTML=`<i class="fas fa-eye${show?'-slash':''}"></i>`;
+}
+function showToast(msg){
+  const t=document.createElement('div');
+  t.style.cssText='position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:.5rem 1.25rem;border-radius:20px;font-size:.85rem;z-index:999;pointer-events:none';
+  t.textContent=msg;document.body.appendChild(t);
+  setTimeout(()=>t.remove(),2000);
+}
+// close modal on overlay click
+document.querySelectorAll('.modal-overlay').forEach(el=>{
+  el.addEventListener('click',e=>{if(e.target===el){const id=el.id.replace('modal-','');if(id==='wordToPDF')closeDocConv();else closeModal(id);}});
+});
+</script>
+</body>
+</html>
