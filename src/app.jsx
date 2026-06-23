@@ -4,7 +4,7 @@ import {
   CircleHelp, Clock3, Combine, Download, FileArchive, FileImage, FileLock2,
   FileOutput, FilePenLine, FileSpreadsheet, FileText, FileType2, Film,
   Grid2X2, Heart, Image as ImageIcon, Images, Info, Link2, LockKeyhole,
-  Menu, MessageSquareText, Mic, MicOff, Moon, MoreHorizontal, PanelLeftClose,
+  Menu, MessageSquareText, Mic, MicOff, Moon, MoreHorizontal, PanelLeftClose, 
   PanelLeftOpen, Presentation, RotateCw, Scissors, Search, Send, ShieldCheck,
   Sparkles, Split, Sun, UploadCloud, UserRound, Users, Video, VideoOff, Wand2,
   X, Zap,
